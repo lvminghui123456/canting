@@ -1,0 +1,50 @@
+<!--pages/orderdetail/orderdetail.wxml-->
+<view class='address'>
+  <view class='name'></view>
+  <view class='address-detail'></view>
+  <view class='bottom'>微信支付</view>
+</view>
+<view class='good-list'>
+  <view class='good'>
+    <view class='good-name'>
+      <view class='name-left'>巨无霸</view>
+      <view class='name-center'>￥10</view>
+      <view class='name-right'>x1</view>
+    </view>
+    <view class='good-detail'></view>
+  </view>
+  <view class='good'>
+    <view class='good-name'>
+      <view class='name-left'>巨无霸中套餐</view>
+      <view class='name-center'>￥25</view>
+      <view class='name-right'>x1</view>
+    </view>
+    <view class='good-detail'>
+      <view>-中杯可乐</view>
+      <view>-中薯条</view>
+      <view>-巨无霸</view>
+    </view>
+  </view>
+  <view class='good-total'>
+    <view class='total-left'>合计</view>
+    <view class='total-right'>￥35</view>
+  </view>
+</view>
+<view class='order'>
+  <view class='order-list'>
+    <view class='order-left'>订单号</view>
+    <view class='order-right'>4684156498415649</view>
+  </view>
+  <view class='order-list'>
+    <view class='order-left'>商户单号</view>
+    <view class='order-right'>4684156498415649</view>
+  </view>
+  <view class='order-list'>
+    <view class='order-left'>下单时间</view>
+    <view class='order-right'>2018-09-07 16:20:20</view>
+  </view>
+  <view class='order-list'>
+    <view class='order-left'>订单状态</view>
+    <view class='order-right'>已完成</view>
+  </view>
+</view>

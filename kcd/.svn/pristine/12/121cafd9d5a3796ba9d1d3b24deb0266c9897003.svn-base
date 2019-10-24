@@ -1,0 +1,72 @@
+<!--pages/orderdetail/orderdetail.wxml-->
+<view class="container">
+<view class='header'>
+  <view class='header-top'>
+    <image src='/resourse/images/duihao.png' style=''></image>
+    支付成功
+  </view>
+  <view class='header-center'>请关注您的取餐码</view>
+  <view class='header-code'>{{order.orderNum}}</view>
+</view>
+<view class="address" id='address'>
+    <view class="address_adr" bindtap='addadress'>
+      <view class="to">{{order.restaruantName}}</view>
+      <view class="bo">{{order.positionDetail}}</view>
+    </view>
+    <!-- <view class="address_mem" bindtap='handmap'>
+      <view class="address_img">
+        <image src="/resourse/image/cc-right.png"></image>
+      </view>
+    </view> -->
+  </view>
+ <view class="jcfs" >
+    微信支付
+  </view>
+<view class='good-list'>
+  <view class='good' wx:for="{{order.order}}">
+    <view class='good-name'>
+      <view class='name-left'>{{item.menuName}}</view>
+      <view class='name-center'>￥{{item.menuPrice}}</view>
+      <view class='name-right'>x{{item.menuNum}}</view>
+    </view>
+    <view class='good-detail'>
+      <view wx:for="{{item.order_item}}" wx:for-item="orderItem" wx-if="{{orderItem.itemName != ''}}">-{{orderItem.itemName}}</view>
+    </view>
+  </view>
+ 
+</view>
+<view class='good-total'>
+    <view class='total-left' style='font-weight:500'>满减优惠</view>
+    <view class='total-right' style='font-weight:400'>{{order.discountPrice}}</view>
+  </view>
+ <view class='good-total'>
+    <view class='total-left'>合计</view>
+    <view class='total-right'>￥{{order.orderPrice}}</view>
+  </view>
+<view class='order'>
+  <view class='order-list'>
+    <view class='order-left'>订单号</view>
+    <view class='order-right'>{{order.orderCode}}</view>
+  </view>
+  <!-- <view class='order-list'>
+    <view class='order-left'>取餐号</view>
+    <view class='order-right'>{{order.orderNum}}</view>
+  </view> -->
+  <!-- <view class='order-list'>
+    <view class='order-left'>商户单号</view>
+    <view class='order-right'>4684156498415649</view>
+  </view> -->
+  <view class='order-list'>
+    <view class='order-left'>下单时间</view>
+    <view class='order-right'>{{order.createTime}}</view>
+  </view>
+  <view class='order-list'>
+    <view class='order-left'>订单状态</view>
+    <view class='order-right'>{{order.orderStatus}}</view>
+  </view>
+</view>
+<view class='but' wx:if="{{order.orderStatus == '待支付'}}" bindtap='updateTheOrderStatus'>
+    取消订单
+</view>
+</view>
+  

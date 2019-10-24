@@ -1,0 +1,54 @@
+.container{
+  width:100%;
+  height: 100%;
+}
+.good{
+  width: 100%;
+  height: 200rpx;
+  padding: 20rpx 10rpx;
+  border-top: 1px solid #ccc;
+  display: flex;
+}
+.good .good-image{
+  width: 250rpx;
+}
+.good .good-image image{
+  width: 80%;
+  height: 100%;
+}
+.good .good-name{
+  width: 280rpx;
+  font-size: 24rpx;
+  line-height: 200rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
+.good .good-price{
+  width: 140rpx;
+  font-size: 26rpx;
+  text-align: center;
+  font-weight: 600;
+  line-height: 200rpx;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.good .good-button{
+  width: 80rpx;
+  line-height: 200rpx;
+}
+radio .wx-radio-input{
+   border-radius: 50%;/* 圆角 */
+   width: 30rpx;
+   height: 30rpx;
+   
+}
+radio .wx-radio-input-checked{
+   border: none;
+   background: #d02132 !important;
+}
+radio .wx-radio-input.wx-radio-input-checked::before{
+   font-size:30rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: #d02132;
+}

@@ -1,0 +1,257 @@
+<view class="page">
+  <view class="register" id='register' wx:if="{{registerShow}}">
+    <view class='button'>
+      <button bindtap="navtoRegister" open-type="getUserInfo">请验证手机号</button>
+    </view>
+    <view class='text'>验证手机号即可完成登录，并注册成为会员</view>
+  </view>
+  <view class="address" id='address'>
+    <view class="address_adr" bindtap='addadress'>
+      <view class="to">{{title}}</view>
+      <view class="bo">{{address}}</view>
+    </view>
+    <view class="address_mem" bindtap='handmap'>
+      <view class="address_img">
+        <image src="/resourse/image/cc-right.png"></image>
+      </view>
+
+    </view>
+  </view>
+  <!-- 去支付时候的验证 -->
+  <!-- <view wx:if="{{showbg}}" class="bgs">
+    
+    <view class="bg-contant">
+      <view class="tbtb" style="overflow:auto">
+       
+        <view class="tbtb1" style="overflow:auto">
+          <image src="/resourse/image/bgcor.png"></image>
+        </view>
+
+
+      </view>
+      <view class="md">您的取餐门店是：</view>
+      <view class="mdtit">{{title}}</view>
+      <view class="mdadr">{{address}} </view>
+      <view class="surejc">
+        <view class="surejc-left"> 您的就餐方式是：</view>
+        <view class="surejc-left" style="color:#FCC516;font-size:30rpx"> {{tangshi}}</view>
+
+      </view>
+      <view class="surejc">
+        <view class="surejc-left"> 您的取餐方式是：</view>
+        <view class="surejc-left" style="color:#FCC516;font-size:30rpx"> {{liji}}</view>
+      </view>
+      <view class="surejc">
+        <view class="surejc-left"> 您的支付方式是：</view>
+        <view class="surejc-left" style="color:#FCC516;font-size:30rpx"> {{zhifu}}</view>
+      </view>
+      <view class="btn">
+        <view class="quxiao" bindtap='quxiao'>取消</view>
+        <view class="sure" bindtap='sure'>确认</view>
+      </view>
+    </view>
+  
+  </view> -->
+
+  <!-- 单号 -->
+  <!-- <view class="jcfs" style="margin-top:20rpx;">
+    订单编号
+    <text style='margin-left:10rpx'>1234562343333333333333</text>
+  </view> -->
+  <!-- 预约时间 -->
+  <!-- <view class="time">
+    <view class="nowtime">
+      立即享用
+    </view>
+    <view class="lattertime piker">
+      <picker mode="time" value="{{time}}" start="{{time1}}" end="21:01" bindchange="bindTimeChange">
+        <view class="picker">
+          预约取餐: {{time}}
+        </view>
+      </picker>
+    </view>
+  </view> -->
+  <view class="jcfs" style="margin-top:20rpx;">
+    请选择取餐时间
+  </view>
+  <view class="info infoo" style="position:relative;">
+    <radio-group bindchange="radioChange">
+      <label>
+        <view class="wd"> 立即取餐
+          <radio value="now" checked="{{showview0}}" />
+        </view>
+        <!-- <view class="st"> 预约取餐
+          <radio value="later" />
+        </view> -->
+
+      </label>
+    </radio-group>
+    <view wx:if="{{showview}}" class="fooo">
+      <picker mode="time" value="{{time}}" start="{{time1}}" end="20:00" bindchange="bindTimeChange">
+        <view class="picker">
+          取餐时间: {{time}}
+        </view>
+      </picker>
+    </view>
+    <view class="yuyue" bindtap='handyuyue' wx:if="{{showview1 && time1<'20:00'}}">预约</view>
+  </view>
+  <!-- 就餐方式 -->
+  <view class="jcfs" style="margin-top:20rpx;">
+    请选择就餐方式
+  </view>
+  <view class="info">
+    <radio-group bindchange="handletypechange">
+      <label>
+
+        <view class="st"> 堂食
+          <radio value="sell" />
+        </view>
+      </label>
+      <label>
+        <view class="wd"> 打包
+          <radio value="buy" />
+        </view>
+      </label>
+    </radio-group>
+  </view>
+  <!-- <view class='table-number' wx:if="{{diningWay == '0'}}">
+    <view class='table-left'>桌号</view>
+    <view class='table-right' bindtap='saoma'>{{tableNumber}}</view>
+  </view> -->
+  <!-- 微信支付 -->
+  <!-- <view class="wxzf">
+    <view class="wxzf_text">微信支付</view>
+    <view class="wxzf_radio">
+      <label>
+        <radio value="wxzf" checked="true" />
+      </label>
+    </view>
+  </view> -->
+  <!-- 支付方式方式 -->
+  <!-- <view class="jcfs" style="margin-top:20rpx;">
+    请选择支付方式
+  </view>
+  <view class="info">
+    <radio-group bindchange="handletypechange1">
+      <label>
+        <view class="wd"> 微信支付
+          <radio value="weixin" checked="true" />
+        </view>
+        <view class="st"> 卡券支付
+          <radio value="kaquan" />
+        </view>
+
+      </label>
+    </radio-group>
+  </view> -->
+  <!-- 订到列表 -->
+  <view class="shoplist">
+    <!-- 列表中的内容 -->
+    <view class="list_cont" wx:for="{{carArray}}" wx:if="{{item.goodNum != 0}}" wx:key="unique2">
+      <view class="text_tit" wx:if="{{item.goodNum != 0}}">{{item.name}}
+        <!-- <text class ="text_tit0" wx:if="{{item.subtitle}}" bindtap='xiugai'>修改</text> -->
+        <!-- <navigator class ="text_tit0" wx:if="{{item.subtitle}}" url="/pages/gooddetail/gooddetail?goodsid={{item.gid}}&title={{item.name}}&typ={{item.types}}">
+                          修改
+           </navigator> -->
+      </view>
+      <!-- <view class="text_tit1" wx:if="{{item.goodNum != 0}}">{{item.subtitle}}</view> -->
+      <view class="text_tit1" wx:if="{{item.combMenuName}}">{{item.combMenuName}}</view>
+      <view class="price1">
+        <view class="now" wx:if="{{item.goodNum > 0}}">
+          <text style="font-size:24rpx">¥</text>{{item.xiaoji}}</view>
+
+      </view>
+      <view class="addcut">
+        <view class='operation-right'>
+          <view class='xiangbian' style=''>
+            <image src='/resourse/images/subtract.png' wx:if="{{item.goodNum != 0}}" bindtap="minusCount" data-typeid="{{item.typeid1}}" data-goodid="{{item.goodid1}}" data-index="{{item.index}}" data-goodsid="{{item.goodid12}}" data-types="{{item.types}}" data-dishesItemId="{{item.dishesItemId}}"
+              data-operationid="{{item.operationid}}" />
+            <text wx:if="{{item.goodNum != 0}}" class='num-view'>{{item.goodNum}}</text>
+            <image src='/resourse/images/add.png' bindtap="addCount" data-typeid="{{item.typeid1}}" data-goodid="{{item.goodid1}}" data-index="{{item.index}}" wx:if="{{item.goodNum != 0 && item.price!=0}}" data-goodsid="{{item.goodid12}}" data-operationid="{{item.operationid}}"
+              data-types="{{item.types}}" data-dishesItemId="{{item.dishesItemId}}" />
+            <image src='/resourse/images/add2.png' data-typeid="{{item.typeid1}}" data-goodid="{{item.goodid1}}" data-index="{{item.index}}" wx:if="{{item.price==0}}" data-goodsid="{{item.goodid12}}" data-operationid="{{item.operationid}}" data-types="{{item.types}}"
+              data-dishesItemId="{{item.dishesItemId}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- heji -->
+  <view class="heji">
+    <view class="heji_top">
+      <view class="totle">合计</view>
+      <view class="totle_price">
+        <text style="font-size:24rpx;">¥</text> {{totalPrice}}</view>
+    </view>
+    <view class="heji_bottom">
+      <image src="/resourse/image/tanhao.png"></image>
+      <view class="gd">食品现制现售，不适用退货服务</view>
+    </view>
+    <view class="heji_bottom">
+      <image src="/resourse/image/tanhao.png"></image>
+      <view class="gd">披萨等待时间需15-20分钟，遇繁忙时段将延迟至30分钟左右。</view>
+    </view>
+  </view>
+  <!-- 发票请求 -->
+  <!-- <view class="fp">
+      <view class="fp_left">
+        <view class="fpxq">发票需求</view>
+        <view class="fpxq1">如需发票，请在微信支付成功提示消息中申请，我们将为您提供电子发票</view>
+      </view>
+      <view class="fpz-right">
+       <label>
+        <radio value="fp" checked="true" />
+      </label>
+      </view>
+  </view> -->
+
+  <view class="manjian" wx:if="{{isfload}}" wx:key="k">
+    <view class="mjleft">满减优惠:</view>
+    <view class="mjright">
+      <view class="yh" wx:for="{{mjdata}}">
+        <text>{{item.thresholdPrice}}</text>
+        <text class="{{item.discountId}}">减</text>
+        <text>{{item.discountPrice}}</text>
+      </view>
+    </view>
+
+  </view>
+  <view class="manjian1" wx:if="{{isfload1}}">
+    <view class="mjleft1">折扣优惠:</view>
+    <view class="mjright1">
+      <view class="yh" wx:for="{{mjdata}}" wx:key="k1">
+        <text>{{item.discount}}</text>
+        <text class="{{item.discountId}}">折</text>
+
+      </view>
+    </view>
+
+  </view>
+  <view class="zhpay">
+    <view class="zhpay-left">
+      <view class="yhje">
+        <text>已优惠</text>
+        <text>¥</text>{{yuje}}
+      </view>
+      <view class="sfje">
+        <text style="font-size:32rpx;line-height:100rpx;">合计</text>
+        <text style="font-size:24rpx;line-height:100rpx;margin-left:20rpx;">¥</text>{{hjje}}
+      </view>
+
+    </view>
+    <view class="zhpay-right">
+      <view style="width:1px;height:50rpx;position:absolute;left:20rpx;top:28rpx;background:#ccc;"></view>
+      <view class="shopcar_pay">
+        <form bindsubmit="gotopay" report-submit='true' style="width:100%;height:100%;">
+          <button style="float:left" formType="submit">去支付</button>
+          <image src="/resourse/image/more.png" style="float:left;"></image>
+        </form>
+
+      </view>
+    </view>
+  </view>
+  <!-- <form bindsubmit="messge" report-submit='true'>
+    <button  formType="submit"> 发送消息模板 </button>
+</form> -->
+
+</view>

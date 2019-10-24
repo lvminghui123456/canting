@@ -1,0 +1,45 @@
+<!--pages/carddetail/carddetail.wxml-->
+<view class='container'>
+  <view class='card-face'>
+    <view class='title'>
+      <image src='/resourse/images/cardFace.png'></image>
+      选择卡面
+    </view>
+    <scroll-view scroll-x="{{scrollX}}" style="width: 100%;height:400rpx;" class='card-list'>
+      <view class='card-con' wx:for="{{imageList}}" bindtap='checkImage' data-idx="{{index}}">
+        <view class='card-checked {{chooseImage != index ? "image-hide":""}}'>
+          <image src='/resourse/images/checked.png'></image>
+        </view>
+        <image src='{{item}}' class='card-image {{chooseImage == index ? "border-show":""}}'></image>
+      </view>
+    </scroll-view>
+  </view>
+  <view class='card-gift'>
+    <view class='title'>
+      <image src='/resourse/images/gift.png'></image>
+      选择礼品
+    </view>
+    <view class='gift-list'>
+      <view class='gift-con {{item.num > 0 ? "checked":""}}' wx:for="{{giftList}}">
+        <view class='gift-num' wx:if="{{item.num > 0}}">{{item.num}}</view>
+        <view class='gift-top'>
+          <view class='gift-text'>{{item.text}}</view>
+          <view class='gift-price'>{{item.price}}元</view>
+        </view>
+        <view class='gift-bottom'>
+          <view class='gift-delete' wx:if="{{item.num > 0}}" bindtap="minusCount" data-index="{{index}}">-</view>
+          <view class='gift-add {{item.num <= 0 ? "show":""}}' bindtap="addCount" data-index="{{index}}">+</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='cart'>
+    <view class='left'>
+      <view class='good-num'>共{{goodsNum}}份</view>
+      <view class='good-price'>￥{{goodsPrice}}</view>
+    </view>
+    <view class='right'>
+      <view class='buy' bindtap='buyCard'>购买</view>
+    </view>
+  </view>
+</view>

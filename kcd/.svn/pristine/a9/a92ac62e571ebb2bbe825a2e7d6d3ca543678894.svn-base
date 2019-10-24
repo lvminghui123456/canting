@@ -1,0 +1,2 @@
+<!--pages/jifenshiyong/jifenshiyong.wxml-->
+<image src='{{image}}' mode='widthFix'></image>

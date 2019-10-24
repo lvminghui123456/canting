@@ -1,0 +1,53 @@
+{
+  "pages":[
+    "pages/home/home",
+    "pages/index/index",
+    "pages/card/card",
+    "pages/member/member",
+    "pages/gooddetail/gooddetail",
+    "pages/shopdetail/shopdetail",
+    "pages/choosecity/choosecity",
+    "pages/chooseaddress/chooseaddress",
+    "pages/logs/logs",
+    "pages/gooddetailAll/gooddetailAll",
+    "pages/search/search", 
+    "pages/carddetail/carddetail",
+    "pages/shopcarpay/shopcarpay",
+    "pages/order/order"  
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff", 
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "/resourse/image/members.png",
+        "selectedIconPath": "/resourse/image/members.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "点餐",
+        "iconPath": "/resourse/image/members.png",
+        "selectedIconPath": "/resourse/image/members.png"
+      },
+      {
+        "pagePath": "pages/card/card",
+        "text": "卡券",
+        "iconPath": "/resourse/image/members.png",
+        "selectedIconPath": "/resourse/image/members.png"
+      },
+      {
+        "pagePath": "pages/member/member",
+        "text": "会员",
+        "iconPath": "/resourse/image/members.png",
+        "selectedIconPath": "/resourse/image/members.png"
+      }
+    ]
+  }
+}
+                                                                                                                               

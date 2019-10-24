@@ -1,0 +1,177 @@
+/* pages/carddetail/carddetail.wxss */
+
+.container .card-face,.container .card-gift{
+  padding-left: 50rpx;
+}
+.container view .title{
+  height: 100rpx;
+  line-height: 100rpx;
+  display: flex;
+  align-items: center;
+  font-size: 34rpx;
+}
+.container view .title image{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}
+.container .card-face .card-list{
+  width: 100%;
+  height: 400rpx;
+  margin-top: 20rpx;
+  white-space: nowrap;
+}
+.container .card-face .card-list .card-con{
+  width: 560rpx;
+  height: 330rpx;
+  display: inline-block;
+  position: relative;
+  padding: 20rpx;
+}
+.container .card-face .card-list .card-con .card-checked{
+  width: 560rpx;
+  height: 330rpx;
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  border-radius: 20rpx;
+  border: 6rpx solid #00C577;
+  box-sizing: border-box;
+}
+.container .card-face .card-list .card-con .card-checked image{
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+  background: #fff;
+  border-radius: 50%;
+}
+.container .card-face .card-list .card-con .image-hide{
+  display: none;
+}
+.container .card-face .card-list .card-con .card-image{
+  width: 560rpx;
+  height: 330rpx;
+  border-radius: 20rpx;
+  
+}
+
+/* 选择礼品 */
+.container .card-gift{
+  overflow: hidden;
+  padding-bottom: 160rpx;
+}
+.container .card-gift .gift-con{
+  width: 310rpx;
+  height: 254rpx;
+  margin-right: 30rpx;
+  float: left;
+  box-sizing: border-box;
+  border: 4rpx solid #ccc;
+  border-radius: 20rpx;
+  position: relative;
+  margin-bottom: 30rpx;
+}
+.container .card-gift .gift-con .gift-top{
+  height: 150rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #ccc;
+  padding-top: 25rpx;
+}
+.container .card-gift .gift-con .gift-top view{
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 50rpx;
+  text-indent: 40rpx;
+}
+.container .card-gift .gift-con .gift-bottom{
+  height: 100rpx;
+  box-sizing: border-box;
+}
+.container .card-gift .gift-con .gift-bottom view{
+  height: 100%;
+  width: 50%;
+  text-align: center;
+  line-height: 100rpx;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-size: 62rpx;
+
+}
+.container .card-gift .gift-con .gift-bottom .gift-delete{
+  color: #7A7A7A;
+  box-sizing: border-box;
+  border-right: 1rpx solid #ccc;
+}
+.container .card-gift .gift-con .gift-bottom .gift-add{
+  color: #00C577;
+}
+.container .card-gift .gift-con .gift-bottom .gift-add.show{
+  width: 100%;
+}
+/* 选中边框 */
+.container .card-gift .gift-con.checked{
+  border: 4rpx solid #00C577;
+}
+.container .card-gift .gift-con .gift-num{
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+  width: 50rpx;
+  height: 50rpx;
+  background: #00C577;
+  font-size: 30rpx;
+  text-align: center;
+  line-height: 50rpx;
+  color: #ffffff;
+  border-radius: 50%;
+}
+
+
+/* 底部购买 */
+.cart{
+  position: fixed;
+  width: 100%;
+  height: 160rpx;
+  border-top: 1px solid #ccc;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  background: #fff;
+  box-sizing: border-box;
+  padding-top: 20rpx;
+}
+.cart .left{
+  flex: 1;
+  text-indent: 50rpx;
+}
+.cart .left .good-num{
+  font-size: 26rpx;
+  color: #757575;
+  line-height: 50rpx;
+}
+.cart .left .good-price{
+  font-size: 34rpx;
+  font-weight: 600;
+  line-height: 60rpx;
+}
+.cart .right{
+  flex: 1;
+  text-align: right;
+  line-height: 110rpx;
+}
+.cart .right .buy{
+  width: 200rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-radius: 20rpx;
+  background: #00C577;
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+  display: inline-block;
+  margin-right: 50rpx;
+}
+

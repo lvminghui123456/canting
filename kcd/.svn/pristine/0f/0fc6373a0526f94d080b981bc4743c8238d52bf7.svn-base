@@ -1,0 +1,594 @@
+var util = require('../../utils/util.js'); 
+const app = getApp()
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    title: '青岛麦当劳金水路丽达餐厅',
+    address: '山东省青岛市李沧区铜川路216号力达广场负一层',
+    carArray: [],
+    totalPrice:'',
+    time1:'',
+    showview:false,
+    registerShow:true
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  
+  onLoad: function (options) {
+    // 调用函数时，传入new Date()参数，返回值是日期和时间  
+    var time = util.formatTime(new Date());
+    // 再通过setData更改Page()里面的data，动态更新页面的数据  
+    this.setData({
+      time1: time
+    });  
+
+    console.log(time)
+    this.setData({
+      totalPrice: options.totleprice
+    })
+    console.log(this.data.totalPrice)
+      //缓存
+      var cart = wx.getStorageSync("cart");
+      var allGoods1 = wx.getStorageSync("allGoods");
+
+      if (cart) {
+        this.setData({
+          carArray: cart,
+          allGoods: allGoods1
+        })
+        console.log(this.data.carArray)
+        console.log(this.data.allGoods)
+        for (var i = 0; i < this.data.carArray.length; i++) {
+          if (this.data.carArray[i].goodNum > 0) {
+            console.log(1)
+            this.setData({
+              cartShow: 'block'
+            })
+            this.calTotalPrice()
+          }
+
+
+        }
+
+
+      }
+      if (allGoods1) {
+        try {
+          //wx.setStorageSync('cart', arr)
+          wx.setStorageSync('allGoods', allGoods1)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      else {
+        try {
+          //wx.setStorageSync('cart', arr)
+          wx.setStorageSync('allGoods', this.data.allGoods)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    
+  },
+  bindTimeChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      time: e.detail.value
+    })
+  },
+  radioChange: function (e) {
+    var that = this;
+    that.setData({
+      showview: e.detail.value == "later"
+    })
+  },
+  //增加商品数量
+  addCount(e) {
+    console.log(e)
+    var _typeid = e.currentTarget.dataset.typeid;
+    var _goodid = e.currentTarget.dataset.goodid;
+    var _index = e.currentTarget.dataset.index;
+    var types = e.currentTarget.dataset.types;
+    console.log(types)
+    if (types == "add") {
+      console.log("我是愿数组")
+      this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum++;
+      var mark = 'a' + _typeid + 'b' + _goodid + 'c' + _index;
+      var price = this.data.allGoods[_typeid].goods[_goodid].nowPrice;
+      var goodNum = this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+      var name = this.data.allGoods[_typeid].goods[_goodid].name;
+      var typeid = this.data.allGoods[_typeid].menuId;
+      var goodid = this.data.allGoods[_typeid].goods[_goodid].dishesMenuId;
+      var operationid = this.data.allGoods[_typeid].goods[_goodid].operation[_index].dishesButtonId;
+      var typ = this.data.allGoods[_typeid].goods[_goodid].operation[_index].type;
+      var obj = {
+        price: price,
+        goodNum: goodNum,
+        //mark: mark,
+        name: name,
+        typeid: typeid,
+        goodid: goodid,
+        operationid: operationid,
+        index: _index,
+        typeid1: _typeid,
+        goodid1: _goodid,
+        types: typ
+      };
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          if (arr[j].goodid == goodid) {
+            arr[j].goodNum += 1;
+            f = true;
+            try {
+              wx.setStorageSync('cart', arr)
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+        }
+        if (!f) {
+          arr.push(obj);
+        }
+      } else {
+        arr.push(obj);
+      }
+      
+    } else { //定制数组
+      console.log("我是现在数组")
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      console.log(arr)
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          console.log(arr[j].goodid)
+          console.log(e.currentTarget.dataset.goodsid)
+          if (arr[j].goodid == e.currentTarget.dataset.goodsid) {
+            arr[j].goodNum += 1;
+            f = true;
+            try {
+              wx.setStorageSync('cart', arr)
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+        }
+        if (!f) {
+          arr.push(obj);
+        }
+      } else {
+        arr.push(obj);
+        console.log(arr)
+      }
+
+    }
+    this.setData({
+      carArray: arr,
+      allGoods: this.data.allGoods
+    })
+    try {
+      wx.setStorageSync('cart', arr)
+      wx.setStorageSync('allGoods', this.data.allGoods)
+    } catch (e) {
+      console.log(e)
+    }
+
+    this.calTotalPrice();
+    console.log(this.data.allGoods)
+    console.log(e)
+    if (goodNum > 0) {
+      this.setData({
+        cartShow: 'block'
+      })
+    }
+    
+  },
+
+  // 定义根据id删除数组的方法
+  removeByValue: function (array, val) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].goodid == val) {
+        array.splice(i, 1);
+        break;
+      }
+    }
+  },
+  // 减少数量
+  minusCount(e) {
+    var _typeid = e.currentTarget.dataset.typeid;
+    var _goodid = e.currentTarget.dataset.goodid;
+    var _index = e.currentTarget.dataset.index;
+    var types = e.currentTarget.dataset.types;
+    console.log(e)
+    var arr = wx.getStorageSync('cart') || []
+    if (types == "add") {
+      console.log("我是愿数组")
+      //this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+      var mark = 'a' + _typeid + 'b' + _goodid + 'c' + _index;
+      var price = this.data.allGoods[_typeid].goods[_goodid].nowPrice;
+      var goodNum = this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+      var name = this.data.allGoods[_typeid].goods[_goodid].name;
+      var typeid = this.data.allGoods[_typeid].menuId;
+      var goodid = this.data.allGoods[_typeid].goods[_goodid].dishesMenuId;
+      var operationid = this.data.allGoods[_typeid].goods[_goodid].operation[_index].dishesButtonId;
+      var obj = {
+        price: price,
+        goodNum: goodNum,
+        //mark: mark,
+        name: name,
+        typeid: typeid,
+        goodid: goodid,
+        operationid: operationid,
+        index: _index,
+        typeid1: _typeid,
+        goodid1: _goodid,
+      };
+      // var carArray1 = this.data.carArray.filter(item => item.mark != mark)
+      // console.log(carArray1)
+      // carArray1.push(obj)
+      // var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          if (arr[j].goodid == goodid) {
+           
+            f = true;
+            console.log(arr.length)
+            if (arr[j].goodNum <= 1 && arr.length>1) {
+                console.log("我执行了移除数组方法，bing")
+              arr[j].goodNum -= 1;
+              this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;              
+              this.removeByValue(arr, goodid)
+              this.setData({
+                carArray: arr,
+                allGoods: this.data.allGoods
+              })
+              console.log(arr)
+              try {
+                wx.setStorageSync('cart', arr)
+                wx.setStorageSync('allGoods', this.data.allGoods)
+              } catch (e) {
+                console.log(e)
+              }
+
+            }
+            else if (arr[j].goodNum >1){
+              console.log("我是数量大雨一的时候")
+              arr[j].goodNum -= 1;
+              this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+              this.setData({
+                carArray: arr,
+                allGoods: this.data.allGoods
+              })
+              console.log(arr)
+              try {
+                wx.setStorageSync('cart', arr)
+                wx.setStorageSync('allGoods', this.data.allGoods)
+              } catch (e) {
+                console.log(e)
+              }
+            }
+            else if (arr[j].goodNum <= 1 && arr.length<=1){
+              var that=this
+              // var num1=that.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+              // var num2=arr[j].goodNum ;
+              wx.showModal({
+                title: '提示',
+                content: '删除最后一款餐点，您将回到菜单页，不删除您将回到订单页面',
+                confirmText:"增加餐点",
+                cancelText:"回订单",
+                success: function (res) {
+                  console.log(res)
+                  if (res.confirm) {
+                    console.log('用户点击确定')
+                    that.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum-=1;
+                    arr[j].goodNum-=1;
+                    // num2--
+                    console.log(arr[j].goodNum)
+                    // console.log(num2)
+                    console.log(arr)
+                    console.log(goodid)
+                    that.removeByValue(arr, goodid)
+                    that.setData({
+                      carArray: arr,
+                      allGoods: that.data.allGoods,
+                      totalCount: 0,
+                      totalPrice: 0,
+                    })
+                    console.log(arr)
+                    try {
+                      wx.setStorageSync('cart', arr)
+                      wx.setStorageSync('allGoods', that.data.allGoods)
+                    } catch (e) {
+                      console.log(e)
+                    }
+                    wx.switchTab({
+                      url: '../index/index'
+                    })
+                  } else if (res.cancel) {
+                    // arr[j].goodNum = 1
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+            }
+            // if (arr.length <= 0) {
+            //   this.setData({
+            //     allGoods: this.data.allGoods,
+            //     carArray: [],
+            //     totalCount: 0,
+            //     totalPrice: 0,
+            //   })
+            //   console.log(this.data.allGoods)
+            //   this.setData({
+            //     display: 'none',
+            //     cartShow: 'none'
+            //   })
+
+            // }
+            //  if (arr.length <1){
+            //   wx.showModal({
+            //     title: '提示',
+            //     content: '删除最后一款餐点，您将回到菜单页，不删除您将回到订单页面',
+            //     success: function (res) {
+            //       if (res.confirm) {
+            //         console.log('用户点击确定')
+            //         arr[j].goodNum -= 1;
+            //         f = true;
+            //         this.removeByValue(arr, goodid)
+            //       } else if (res.cancel) {
+            //         arr[j].goodNum = 1
+            //         console.log('用户点击取消')
+            //       }
+            //     }
+            //   })
+            // }
+            
+          }
+
+        }
+
+      }
+    } else { //新数组
+      console.log("我是新数组")
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+        console.log(arr)
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          console.log(arr[j].goodid)
+          console.log(e.currentTarget.dataset.goodsid)
+          if (arr[j].goodid == e.currentTarget.dataset.goodsid) {
+            console.log("我的数组大雨o")
+
+            if (arr[j].goodNum <= 1 && arr.length > 1) {
+              console.log("我执行了移除数组方法，bing")
+              arr[j].goodNum -= 1;
+              //this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+              this.removeByValue(arr, e.currentTarget.dataset.goodsid)
+              this.setData({
+                carArray: arr,
+                allGoods: this.data.allGoods
+              })
+              console.log(arr)
+              try {
+                wx.setStorageSync('cart', arr)
+                wx.setStorageSync('allGoods', this.data.allGoods)
+              } catch (e) {
+                console.log(e)
+              }
+
+            }
+            else if (arr[j].goodNum > 1) {
+              console.log("我是数量大雨一的时候")
+              arr[j].goodNum -= 1;
+              //this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+              this.setData({
+                carArray: arr,
+                allGoods: this.data.allGoods
+              })
+              console.log(arr)
+              try {
+                wx.setStorageSync('cart', arr)
+                wx.setStorageSync('allGoods', this.data.allGoods)
+              } catch (e) {
+                console.log(e)
+              }
+            }
+            else if (arr[j].goodNum <= 1 && arr.length <= 1) {
+              var that = this
+              // var num1=that.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+              // var num2=arr[j].goodNum ;
+              wx.showModal({
+                title: '提示',
+                content: '删除最后一款餐点，您将回到菜单页，不删除您将回到订单页面',
+                success: function (res) {
+                  console.log(res)
+                  if (res.confirm) {
+                    console.log('用户点击确定')
+                    //that.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum -= 1;
+                    arr[j].goodNum -= 1;
+                    // num2--
+                    console.log(arr[j].goodNum)
+                    // console.log(num2)
+                    console.log(arr)
+                    //console.log(goodid)
+                    that.removeByValue(arr, e.currentTarget.dataset.goodsid)
+                    that.setData({
+                      carArray: arr,
+                      allGoods: that.data.allGoods
+                    })
+                    console.log(arr)
+                    try {
+                      wx.setStorageSync('cart', arr)
+                      wx.setStorageSync('allGoods', that.data.allGoods)
+                    } catch (e) {
+                      console.log(e)
+                    }
+                       this.setData({
+                        display: 'none',
+                        cartShow: 'none'
+                      })
+                    wx.switchTab({
+                      url: '../index/index'
+                    })
+                  } else if (res.cancel) {
+                    // arr[j].goodNum = 1
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+            }
+
+
+
+
+
+            // arr[j].goodNum -= 1;
+
+            // if (arr[j].goodNum <= 0) {
+            //   console.log(111)
+            //   this.removeByValue(arr, e.currentTarget.dataset.goodsid)
+
+            // }
+            // if (arr.length <= 0) {
+            //   this.setData({
+            //     allGoods: this.data.allGoods,
+            //     carArray: [],
+            //     totalCount: 0,
+            //     totalPrice: 0,
+            //   })
+            //   this.setData({
+            //     display: 'none',
+            //     cartShow: 'none'
+            //   })
+
+            // }
+          }
+
+        }
+        // if (!f) {
+        //   arr.push(obj);
+        // }
+      }
+      // else {
+      //   arr.push(obj);
+      // }
+
+    }
+    //let allGoods = this.data.allGoods;
+
+    // this.setData({
+    //   carArray: arr,
+    //   allGoods: this.data.allGoods
+    // })
+    // console.log(arr)
+    // try {
+    //   wx.setStorageSync('cart', arr)
+    //   wx.setStorageSync('allGoods', this.data.allGoods)
+    // } catch (e) {
+    //   console.log(e)
+    // }
+
+    this.calTotalPrice();
+
+
+
+  },
+  ychu(res){
+
+  },
+  //计算总价
+  calTotalPrice: function () {
+    var carArray = this.data.carArray;
+    console.log(carArray)
+    var totalPrice = 0;
+    var totalCount = 0;
+    for (var i = 0; i < carArray.length; i++) {
+      totalPrice += carArray[i].price * carArray[i].goodNum;
+      totalCount += carArray[i].goodNum
+    }
+    this.setData({
+      totalPrice: totalPrice,
+      totalCount: totalCount,
+      //payDesc: this.payDesc()
+    });
+  },
+  onShow(){
+    if (app.globalData.isMember == "1" ){
+      this.setData({
+        registerShow: true
+      })
+    }else{
+      this.setData({
+        registerShow: false
+      })
+    }
+    
+  },
+  // onShow(){
+  //   // console.log(options)
+  //   // this.setData({
+  //   //   totalPrice: options.totleprice
+  //   // })
+  //   // console.log(this.data.totalPrice)
+  //   //缓存
+  //   var cart = wx.getStorageSync("cart");
+  //   var allGoods1 = wx.getStorageSync("allGoods");
+
+  //   if (cart) {
+  //     this.setData({
+  //       carArray: cart,
+  //       allGoods: allGoods1
+  //     })
+  //     console.log(this.data.carArray)
+  //     console.log(this.data.allGoods)
+  //     for (var i = 0; i < this.data.carArray.length; i++) {
+  //       if (this.data.carArray[i].goodNum > 0) {
+  //         console.log(1)
+  //         this.setData({
+  //           cartShow: 'block'
+  //         })
+  //         this.calTotalPrice()
+  //       }
+
+
+  //     }
+
+
+  //   }
+  //   if (allGoods1) {
+  //     try {
+  //       //wx.setStorageSync('cart', arr)
+  //       wx.setStorageSync('allGoods', allGoods1)
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  //   else {
+  //     try {
+  //       //wx.setStorageSync('cart', arr)
+  //       wx.setStorageSync('allGoods', this.data.allGoods)
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  // },
+  // 去登陆吆
+  navtoRegister(){
+    wx.navigateTo({
+      url: '/pages/register/register'
+    })
+  }
+})

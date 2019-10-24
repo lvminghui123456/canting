@@ -1,0 +1,54 @@
+// pages/register/register.js
+const app = getApp()
+var WXBizDataCrypt = require('../../utils/cryptojs/RdWXBizDataCrypt.js');
+var appId = "wxbfa44313d8ec22c9";
+var secret = '83b3f1a890c1bdb5297b804017ec99d0';
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    disabled:false
+
+  },
+  onLoad: function (options) {
+
+  },
+  onReady: function () {
+
+  },
+  onShow:function(){
+    
+    app.globalData.isNavtoRes = '1';
+  },
+  onUnload:function(){
+    
+  },
+  navtoregister(){
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          var pc = new WXBizDataCrypt(appId, app.globalData.session_key)
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res)
+              //拿到getUserInfo（）取得的res.encryptedData, res.iv，调用decryptData（）解密
+              var data = pc.decryptData(res.encryptedData, res.iv)
+              // data.unionId就是咱们要的东西了
+              app.globalData.unionid = data.unionId
+              console.log('解密后 unionid: ', app.globalData.unionid)
+              wx.navigateTo({
+                url: '/pages/barregister/barregister'
+              })
+            },
+            fail: function (res) {
+              console.log(res)
+            }
+          })
+        }
+      }
+    })
+    
+  }
+})

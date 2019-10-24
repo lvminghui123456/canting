@@ -1,0 +1,49 @@
+<!--pages/home/home.wxml-->
+<!-- <import src="../../template/template.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/> -->
+<view class="container">
+  <swiper indicator-dots="true" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:'>
+    <block wx:for="{{imgUrls}}" wx:key="{{ke}}">
+      <swiper-item>
+        <image src="{{item.imageName}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!--  主题部分-->
+  <view class="mainbody" style='height:{{bodyheight}}px'>
+    <view class="order">
+      <view class="order-right"></view>
+      <view class="order-left" bindtap='handleresindex'>
+        <view class="top">
+          <image src="/resourse/image/dc.png"></image>
+
+        </view>
+        <view class="bottom">点餐</view>
+
+      </view>
+      
+
+    </view>
+    <view class="order1">
+      <view class="order1-left">
+        <view class="top-let" bindtap='handlerescard'>
+          <view class="top">
+            <image src="/resourse/image/cj.png"></image>
+
+          </view>
+          <view class="bottom">超级用户</view>
+        </view>
+
+      </view>
+
+
+      <view class="order1-right" bindtap='handleresnew'>
+        <!-- <view class="top">
+          <image src="/resourse/image/a1.png"></image>
+
+        </view>
+        <view class="bottom">New乐园</view> -->
+      </view>
+    </view>
+  </view>
+</view>

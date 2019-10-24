@@ -1,0 +1,125 @@
+// pages/carddetail/carddetail.js
+const app = getApp()
+var util = require('../../utils/util.js')
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    scrollX:true,
+    imageList:[
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg"
+    ],
+    giftList:[
+      {
+        "text":"纽有礼现金卡",
+        "price":50,
+        "num":0
+      },
+      {
+        "text": "纽有礼现金卡",
+        "price": 100,
+        "num": 0
+      },
+      {
+        "text": "纽有礼现金卡",
+        "price": 150,
+        "num": 0
+      },
+      {
+        "text": "纽有礼现金卡",
+        "price": 200,
+        "num": 0
+      }
+    ],
+    chooseImage:0,
+    goodsNum:0,
+    goodsPrice:0
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+  checkImage(e){
+    var _index = e.currentTarget.dataset.idx;
+    this.setData({
+      chooseImage: _index
+    })
+  },
+  minusCount(e){
+    var _index = e.currentTarget.dataset.index;
+    console.log(_index)
+    this.data.giftList[_index].num--;
+    var giftList = this.data.giftList;
+    var goodsNum = 0;
+    var goodsPrice = 0;
+    for (var i = 0; i < giftList.length;i++){
+      goodsNum += giftList[i].num;
+      goodsPrice += giftList[i].price * giftList[i].num;
+    }
+    this.setData({
+      giftList: this.data.giftList,
+      goodsNum: goodsNum,
+      goodsPrice: goodsPrice
+    })
+  },
+  addCount(e) {
+    var _index = e.currentTarget.dataset.index;
+    console.log(this.data.giftList[_index].num)
+    this.data.giftList[_index].num++;
+    var giftList = this.data.giftList;
+    var goodsNum = 0;
+    var goodsPrice = 0;
+    for (var i = 0; i < giftList.length; i++) {
+      goodsNum += giftList[i].num;
+      goodsPrice += giftList[i].price * giftList[i].num;
+    }
+    this.setData({
+      giftList: this.data.giftList,
+      goodsNum: goodsNum,
+      goodsPrice: goodsPrice
+    })
+  },
+  buyCard(){
+    // console.log(new Date().getTime())
+    // var date = new Date().getTime();
+    // var signature = util.sha1(date + "9KwiourQPRN3vx3Nn1c_iTOk-eoNjiNhGg5lJxAN1TaJGqCok4i6xkAdD_4w03-nshAgwg3Q03o77IxKVISMhQ" + app.globalData.openid + "pRP3m1dJNRaTW65liyE9-5beJS2w")
+    // // var signature = 'd4a2ebe17ed28c8f8b5c3c60b0d000760e221140'
+    // console.log(date + "9KwiourQPRN3vx3Nn1c_iTOk-eoNjiNhGg5lJxAN1TaJGqCok4i6xkAdD_4w03-nshAgwg3Q03o77IxKVISMhQ" + app.globalData.openid + "pRP3m1dJNRaTW65liyE9-5beJS2w")
+    // console.log(util.sha1("pRP3m1dJNRaTW65liyE9-5beJS2w"))
+    // wx.addCard({
+    //   cardList: [
+    //     {
+    //       cardId: 'pRP3m1dJNRaTW65liyE9-5beJS2w',
+    //       cardExt: '{"code": "", "openid": "' + app.globalData.openid + '", "timestamp": "' + date + '", "signature":"' + signature +'"}'
+    //     }
+    //   ],
+    //   success: function (res) {
+    //     console.log(res.cardList) // 卡券添加结果
+    //   }
+    // })
+  }
+})

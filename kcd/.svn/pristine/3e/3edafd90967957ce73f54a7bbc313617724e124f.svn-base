@@ -1,0 +1,29 @@
+<view class="section">
+  <!-- 搜索 -->
+  <!-- <view class="address">
+    <view class="add_input">
+      <view class="add_input_body">
+        <image src="/resourse/image/ic_serch.png"></image>
+        <input placeholder='请输入门店名称或地址'></input>
+      </view>
+    </view>
+  </view> -->
+  <!-- 当前定位 -->
+  <view class='nowlocation'>
+    <view class="nowlocation_top">当前定位</view>
+    <view class="nowlocation_bottom" bindtap='locationcityt' data-lat="{{lat}}" data-lng="{{lng}}" data-cityid="{{cityid}}" data-city="{{city1}}" data-cid="1">{{city}}</view>
+  </view>
+  <!-- 根据字母选择城市 -->
+  <view class='a-z'>
+    <view wx:for="{{cityAZ}}" wx:key="unique">
+      <view data-id='{{item.cityName}}' bindtap='bindAZ'>{{item.cityName}}</view>
+    </view>
+  </view>
+  <view class='city-item-content'>
+    <view wx:for="{{cityResults}}" wx:key="unique">
+      <view wx:if="{{item.cityPinYin.length > 1}}" class='city-item' data-cityname='{{item.cityName}}' data-cityid='{{item.cityId}}' bindtap='locationcity' data-lat="{{lat}}" data-lng="{{lng}}" data-city="{{city1}}">{{item.cityName}}</view>
+      <view wx:else class='city-item-A-Z' data-cityname='{{item.cityName}}'>{{item.cityName}}</view>
+      <!-- <view data-cityname='{{item.cityName}}' bindtap='citySelected' >{{item.cityName}}</view> -->
+    </view>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+<view class="container">
+  <radio-group class='radio-group' bindchange="radioChange">
+    <label class="good" wx:for="{{goodList.goods}}">
+      <view class='good-image'><image src='{{item.image}}'></image></view>
+      <view class='good-name'>{{item.text}}</view>
+      <view class='good-price'>{{index == nowgoodIdx ? "+"+(item.price - goodList.goods[0].price)+"元" : ""}}</view>
+      <view class='good-button'><radio value="{{index}}" checked="{{index == nowgoodIdx ? true:false}}"/></view>
+    </label>
+  </radio-group>
+</view>

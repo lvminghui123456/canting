@@ -1,0 +1,368 @@
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    title: '青岛麦当劳金水路丽达餐厅',
+    address: '山东省青岛市李沧区铜川路216号力达广场负一层',
+    carArray: [],
+    totalPrice:''
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(options)
+    this.setData({
+      totalPrice: options.totleprice
+    })
+    console.log(this.data.totalPrice)
+      //缓存
+      var cart = wx.getStorageSync("cart");
+      var allGoods1 = wx.getStorageSync("allGoods");
+
+      if (cart) {
+        this.setData({
+          carArray: cart,
+          allGoods: allGoods1
+        })
+        console.log(this.data.carArray)
+        console.log(this.data.allGoods)
+        for (var i = 0; i < this.data.carArray.length; i++) {
+          if (this.data.carArray[i].goodNum > 0) {
+            console.log(1)
+            this.setData({
+              cartShow: 'block'
+            })
+            this.calTotalPrice()
+          }
+
+
+        }
+
+
+      }
+      if (allGoods1) {
+        try {
+          //wx.setStorageSync('cart', arr)
+          wx.setStorageSync('allGoods', allGoods1)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      else {
+        try {
+          //wx.setStorageSync('cart', arr)
+          wx.setStorageSync('allGoods', this.data.allGoods)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    
+  },
+  //增加商品数量
+  addCount(e) {
+    console.log(e)
+    var _typeid = e.currentTarget.dataset.typeid;
+    var _goodid = e.currentTarget.dataset.goodid;
+    var _index = e.currentTarget.dataset.index;
+    var types = e.currentTarget.dataset.types;
+    console.log(types)
+    if (types == "add") {
+      console.log("我是愿数组")
+      this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum++;
+      var mark = 'a' + _typeid + 'b' + _goodid + 'c' + _index;
+      var price = this.data.allGoods[_typeid].goods[_goodid].nowPrice;
+      var goodNum = this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+      var name = this.data.allGoods[_typeid].goods[_goodid].name;
+      var typeid = this.data.allGoods[_typeid].menuId;
+      var goodid = this.data.allGoods[_typeid].goods[_goodid].dishesMenuId;
+      var operationid = this.data.allGoods[_typeid].goods[_goodid].operation[_index].dishesButtonId;
+      var typ = this.data.allGoods[_typeid].goods[_goodid].operation[_index].type;
+      var obj = {
+        price: price,
+        goodNum: goodNum,
+        //mark: mark,
+        name: name,
+        typeid: typeid,
+        goodid: goodid,
+        operationid: operationid,
+        index: _index,
+        typeid1: _typeid,
+        goodid1: _goodid,
+        types: typ
+      };
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          if (arr[j].goodid == goodid) {
+            arr[j].goodNum += 1;
+            f = true;
+            try {
+              wx.setStorageSync('cart', arr)
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+        }
+        if (!f) {
+          arr.push(obj);
+        }
+      } else {
+        arr.push(obj);
+      }
+      
+    } else { //定制数组
+      console.log("我是现在数组")
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      console.log(arr)
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          console.log(arr[j].goodid)
+          console.log(e.currentTarget.dataset.goodsid)
+          if (arr[j].goodid == e.currentTarget.dataset.goodsid) {
+            arr[j].goodNum += 1;
+            f = true;
+            try {
+              wx.setStorageSync('cart', arr)
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+        }
+        if (!f) {
+          arr.push(obj);
+        }
+      } else {
+        arr.push(obj);
+        console.log(arr)
+      }
+
+    }
+    this.setData({
+      carArray: arr,
+      allGoods: this.data.allGoods
+    })
+    try {
+      wx.setStorageSync('cart', arr)
+      wx.setStorageSync('allGoods', this.data.allGoods)
+    } catch (e) {
+      console.log(e)
+    }
+
+    this.calTotalPrice();
+    console.log(this.data.allGoods)
+    console.log(e)
+    if (goodNum > 0) {
+      this.setData({
+        cartShow: 'block'
+      })
+    }
+    
+  },
+
+  // 定义根据id删除数组的方法
+  removeByValue: function (array, val) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].goodid == val) {
+        array.splice(i, 1);
+        break;
+      }
+    }
+  },
+  // 减少数量
+  minusCount(e) {
+    var _typeid = e.currentTarget.dataset.typeid;
+    var _goodid = e.currentTarget.dataset.goodid;
+    var _index = e.currentTarget.dataset.index;
+    var types = e.currentTarget.dataset.types;
+    console.log(e)
+    if (types == "add") {
+      console.log("我是愿数组")
+      this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+      var mark = 'a' + _typeid + 'b' + _goodid + 'c' + _index;
+      var price = this.data.allGoods[_typeid].goods[_goodid].nowPrice;
+      var goodNum = this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+      var name = this.data.allGoods[_typeid].goods[_goodid].name;
+      var typeid = this.data.allGoods[_typeid].menuId;
+      var goodid = this.data.allGoods[_typeid].goods[_goodid].dishesMenuId;
+      var operationid = this.data.allGoods[_typeid].goods[_goodid].operation[_index].dishesButtonId;
+      var obj = {
+        price: price,
+        goodNum: goodNum,
+        //mark: mark,
+        name: name,
+        typeid: typeid,
+        goodid: goodid,
+        operationid: operationid,
+        index: _index,
+        typeid1: _typeid,
+        goodid1: _goodid,
+      };
+      // var carArray1 = this.data.carArray.filter(item => item.mark != mark)
+      // console.log(carArray1)
+      // carArray1.push(obj)
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          if (arr[j].goodid == goodid) {
+            arr[j].goodNum -= 1;
+            f = true;
+            if (arr[j].goodNum <= 0) {
+
+              this.removeByValue(arr, goodid)
+
+            }
+            if (arr.length <= 0) {
+              this.setData({
+                allGoods: this.data.allGoods,
+                carArray: [],
+                totalCount: 0,
+                totalPrice: 0,
+              })
+              this.setData({
+                display: 'none',
+                cartShow: 'none'
+              })
+
+            }
+          }
+
+        }
+
+      }
+    } else { //新数组
+      console.log("我是新数组")
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+        console.log(arr)
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          console.log(arr[j].goodid)
+          console.log(e.currentTarget.dataset.goodsid)
+          if (arr[j].goodid == e.currentTarget.dataset.goodsid) {
+            console.log("我的数组大雨o")
+            arr[j].goodNum -= 1;
+
+            if (arr[j].goodNum <= 0) {
+              console.log(111)
+              this.removeByValue(arr, e.currentTarget.dataset.goodsid)
+
+            }
+            if (arr.length <= 0) {
+              this.setData({
+                allGoods: this.data.allGoods,
+                carArray: [],
+                totalCount: 0,
+                totalPrice: 0,
+              })
+              this.setData({
+                display: 'none',
+                cartShow: 'none'
+              })
+
+            }
+          }
+
+        }
+        // if (!f) {
+        //   arr.push(obj);
+        // }
+      }
+      // else {
+      //   arr.push(obj);
+      // }
+
+    }
+    //let allGoods = this.data.allGoods;
+
+    this.setData({
+      carArray: arr,
+      allGoods: this.data.allGoods
+    })
+    try {
+      wx.setStorageSync('cart', arr)
+      wx.setStorageSync('allGoods', this.data.allGoods)
+    } catch (e) {
+      console.log(e)
+    }
+
+    this.calTotalPrice();
+
+
+
+  },
+  //计算总价
+  calTotalPrice: function () {
+    var carArray = this.data.carArray;
+    var totalPrice = 0;
+    var totalCount = 0;
+    for (var i = 0; i < carArray.length; i++) {
+      totalPrice += carArray[i].price * carArray[i].goodNum;
+      totalCount += carArray[i].goodNum
+    }
+    this.setData({
+      totalPrice: totalPrice,
+      totalCount: totalCount,
+      //payDesc: this.payDesc()
+    });
+  },
+  onShow(options){
+    console.log(options)
+    this.setData({
+      totalPrice: options.totleprice
+    })
+    console.log(this.data.totalPrice)
+    //缓存
+    var cart = wx.getStorageSync("cart");
+    var allGoods1 = wx.getStorageSync("allGoods");
+
+    if (cart) {
+      this.setData({
+        carArray: cart,
+        allGoods: allGoods1
+      })
+      console.log(this.data.carArray)
+      console.log(this.data.allGoods)
+      for (var i = 0; i < this.data.carArray.length; i++) {
+        if (this.data.carArray[i].goodNum > 0) {
+          console.log(1)
+          this.setData({
+            cartShow: 'block'
+          })
+          this.calTotalPrice()
+        }
+
+
+      }
+
+
+    }
+    if (allGoods1) {
+      try {
+        //wx.setStorageSync('cart', arr)
+        wx.setStorageSync('allGoods', allGoods1)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    else {
+      try {
+        //wx.setStorageSync('cart', arr)
+        wx.setStorageSync('allGoods', this.data.allGoods)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+})

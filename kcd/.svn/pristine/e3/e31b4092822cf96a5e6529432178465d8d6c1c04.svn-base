@@ -1,0 +1,94 @@
+/* pages/member/member.wxss */
+.member-header{
+  padding: 20rpx 50rpx;
+}
+.member-card{
+  height: 350rpx;
+  border-radius: 20rpx;
+  background: url("http://47.105.40.122:8082/image/card1.jpg") no-repeat center;
+  background-size: 100% 100%;
+  box-shadow: 3rpx 3rpx 2rpx #888;
+  overflow: hidden;
+  position: relative;
+}
+.member-header .member-card .card-top{
+  height: 80rpx;
+  margin-top: 40rpx;
+  padding-left: 30rpx;
+}
+.member-header .member-card .card-top .logo{
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin: 0;
+  padding: 0;
+}
+.member-header .member-card .card-top .name-con{
+  float: left;
+  font-size: 26rpx;
+  line-height: 40rpx;
+  margin-left: 10rpx;
+  padding: 0;
+  color: #121212;
+}
+.member-header .member-card .title-right{
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.member-header .member-card .card-bottom{
+  position: absolute;
+  width: 400rpx;
+  left: 20rpx;
+  bottom: 20rpx;
+  font-size: 26rpx;
+  line-height: 45rpx;
+}
+/*  */
+.member-header .member-data{
+  height: 160rpx;
+  padding-top: 20rpx;
+  margin-top: 10rpx;
+  display: flex;
+  text-align: center;
+}
+.member-header .member-data .available-integral{
+  flex: 1;
+}
+.member-header .member-data .available-card{
+  flex: 1;
+}
+.member-header .member-data .title{
+  font-size: 26rpx;
+  line-height: 60rpx;
+}
+.member-header .member-data .title1{
+  font-size: 26rpx;
+  line-height: 50rpx;
+  margin-left: 15rpx;
+}
+.member-header .member-data .num{
+  font-size: 40rpx;
+  line-height: 60rpx;
+}
+
+.member-con{
+  padding: 0rpx 50rpx;
+}
+.member-con .li{
+  font-size: 26rpx;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid #ccc;
+  text-indent: 10rpx;
+}
+.member-con .li1{
+  border-top: 2rpx solid #ccc;
+}
+.member-con .li image{
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  margin-top: 25rpx;
+  margin-right: 10rpx;
+}

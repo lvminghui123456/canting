@@ -1,0 +1,36 @@
+<!--pages/register/register.wxml-->
+<view class='header'>
+  <image src='/resourse/images/logo1.png' class='logo'></image>
+</view>
+<view class="section">
+  <view class='member'>
+    <view class='card'>会员领卡</view>
+    <view class='text'>领取会员卡可成为会员，享受消费积分</view>
+  </view>
+  <!-- <button bindtap='' class='weixin'>微信快速注册</button> -->
+  <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"  class='weixin'>微信快速注册</button> 
+  <button wx:if="{{canIUse}}" open-type="getUserInfo" bindtap='showBox'>输入手机号码注册</button>
+</view>
+<view class='box {{hide ? "hide":""}}'>
+  <view class='con'>
+    <view class='title'>手机号认证</view>
+    <view class='bg'></view>
+    <view class='phone'>
+      <view class='text'><text>手机号*</text></view>
+      <input placeholder="请输入手机号" auto-focus bindinput='getphone' value=""/>
+      <view class='button'><button bindtap='getCode' disabled='{{disabled}}'>{{code}}</button></view>
+    </view>
+    <view class='code'>
+      <view class='text'><text>验证码*</text></view>
+      <input placeholder="请输入验证码" auto-focus bindinput='postcode' value=""/>
+    </view>
+    <view class='bg'></view>
+    <view class='bottom'>
+      <view class='quxiao' bindtap='hideBox'>取消</view>
+      <view class='submit' >
+        <button open-type="getUserInfo" wx:if="{{canIUse}}" bindtap='submit' >完成</button>
+        {{canIUse ? "":"请升级微信版本"}}
+      </view>
+    </view>
+  </view>
+</view>

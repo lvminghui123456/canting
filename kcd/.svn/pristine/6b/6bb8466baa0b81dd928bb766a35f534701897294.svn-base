@@ -1,0 +1,58 @@
+<view class="container">
+  <view class='search-box'>
+    <view class='return' bindtap='navBack'>
+      返回
+    </view>
+    <view class='search'>
+      <image src='/resourse/images/search.png'></image>
+      <input type='text' bindinput="bindKeyInput" placeholder="请输入商品名" focus/>
+    </view>
+  </view>
+  <!-- 商品列表 start -->
+  <view class='list-container' style='height:{{listHeight}}px'>
+    
+    <view class="goodswrap">
+      <scroll-view scroll-y="{{scrollY}}" style="height:{{listHeight}}px" class="menu">
+      </scroll-view>
+      <scroll-view scroll-y="{{scrollY}}" style="height: {{listHeight}}px" class="goods" bindscroll="goodsScrollAct" scroll-top="{{scrollTop}}" scroll-into-view="{{toView}}">
+        <view class="box"  wx:for="{{serchgood}}" wx:key="unique" wx:for-index="typeId"  wx:if="{{allGoods.length > 0}}">
+          
+          <view wx:for="{{item.goods}}" wx:for-item="good" wx:key="unique" wx:for-index="goodId" class='good-box'>
+            <view class="good">
+              <view class="title">{{good.name}}</view>
+              <view class="desc">
+                <image src="{{good.logo}}" bindtap='showDetail'/>
+                <view class="priceact">
+                  <view class="price">
+                    ¥<label class="nowprice">{{good.nowPrice}}</label>
+                  </view>
+                  <view wx:for="{{good.operation}}" wx:for-item="operation" wx:for-index="index">
+                    <view class='operation' wx:if="{{operation.type == 'add'}}">
+                      <view class='operation-left'>{{operation.text}}</view>
+                      <view class='operation-right'>
+                          <image src='/resourse/images/subtract.png' wx:if="{{operation.goodNum != 0}}" bindtap="minusCount" data-typeid="{{typeId}}" data-goodid="{{goodId}}" data-index="{{index}}"/>
+                          <text wx:if="{{operation.goodNum != 0}}" class='num-view'>{{operation.goodNum}}</text>
+                          <image src='/resourse/images/add.png' bindtap="addCount" data-typeid="{{typeId}}"  data-goodid="{{goodId}}" data-index="{{index}}"/>
+                      </view>
+                    </view>
+                    <view class='operation' wx:else>
+                      <view class='operation-left'>{{operation.text}}</view>
+                      <view class='operation-right'>      
+                        <navigator url="/pages/gooddetail/gooddetail"><image src='/resourse/images/right.png' /></navigator>
+                      </view>
+                    </view>
+                  </view>
+                  
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class='noGoods'  wx:if="{{allGoods.length <= 0}}">
+          找不到相关的商品,请试试看其他食物吧
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <!-- 列表 stop -->
+</view>

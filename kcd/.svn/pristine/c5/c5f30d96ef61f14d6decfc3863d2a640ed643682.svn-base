@@ -1,0 +1,128 @@
+.address{
+  display: flex;
+  margin:0 auto;
+  height: 80rpx;
+  line-height: 80rpx;
+  flex-direction: row;
+}
+.city{
+  width:100rpx;
+  font-size:28rpx;
+  text-indent: 5rpx;
+}
+.add_input{
+ flex:1;
+ border-bottom:1px solid #ccc;
+}
+.add_input_body{
+  margin-top:15rpx;
+  margin-left:20rpx;
+  margin-right:60rpx;
+  height:50rpx;
+  background:#eee;
+  border-radius: 5rpx;
+}
+.add_input .add_input_body image{
+  width:48rpx;
+  height:48rpx;
+  float:left;
+  vertical-align:center;
+  margin-top:1rpx;
+  margin-bottom:2rpx;
+}
+.add_input .add_input_body input{
+  float:left;
+  height:50rpx;
+  line-height: 50rpx;
+  font-size:28rpx;
+  text-indent: 20rpx;
+  margin-left:5rpx;
+}
+/* dangqiandignwi */
+.nowlocation_top{
+  padding-left:20rpx;
+  font-size:32rpx;
+  line-height: 60rpx;
+}
+.nowlocation_bottom{
+  font-size:28rpx;
+  line-height: 56rpx;
+  padding-left:20rpx;
+}
+.nowlocation{
+  margin-top:10rpx;
+}
+
+
+
+.a-z{
+ width: 70rpx;
+ position: fixed;
+ top: 250rpx;
+ text-align: center;
+ right: 5rpx;
+ color: #eee;
+ font-size:28rpx;
+ /* border: 1rpx solid #3399CC; */
+}
+ 
+ 
+.city-item-content {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ /* margin-top: 110rpx; */
+ background-color: #FFFFFF;
+}
+ 
+.city-item {
+ background: #fff;
+ /* margin-top: 5rpx; */
+ width:87%; 
+ /* padding-left: 20rpx; */
+ margin-left:20rpx;
+ height: 90rpx;
+ font-size: 32rpx;
+ line-height: 100rpx;
+ border-bottom: 1rpx solid #CCCCCC; 
+ /* border:1rpx solid red; */
+}
+ 
+.city-item-A-Z{
+ width: 87%;
+ height: 40rpx;
+ font-size: 30rpx;
+ padding-left: 20rpx;
+ background-color: #EEEEEE;
+ border-top: 1rpx solid #CCCCCC; 
+ margin-top: -1rpx;
+}
+ 
+ 
+.search-box {
+ top: 0;
+ position: fixed;
+ width: 100%;
+ /* left:5%; */
+ background: #eee;
+ height: 110rpx;
+ font-size: 30rpx;
+ border-bottom:1rpx solid #DDDDDD; 
+ /* border: 1rpx solid red; */
+}
+ 
+.search-input {
+ height: 70rpx;
+ line-height: 60rpx;
+ width: 80%;
+ margin-left: 7.5%;
+ border-radius: 20rpx;
+ /* border: 1rpx solid red; */
+ background: #fff;
+ margin-top: 20rpx;
+ padding-left: 5%;
+}
+ 
+.search-input-placeholder {
+ text-align: center;
+}

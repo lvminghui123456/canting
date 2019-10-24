@@ -1,0 +1,138 @@
+
+.container{
+  width:100%;
+  height: 100%;
+  background:#eee;
+}
+.img {
+  width: 100%;
+  height: 350rpx;
+}
+
+.img image {
+  width: 100%;
+  height: 100%;
+}
+.order{
+  width:100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  position:absolute;
+  left:0;
+  bottom:0;
+  background: #000;
+  opacity: 0.8;
+  text-align: center;
+  color:#fff;
+  font-size:32rpx;
+}
+.to {
+  font-size: 28rpx;
+  padding: 10rpx 10rpx 5rpx 20rpx;
+}
+
+.bo {
+  font-size: 24rpx;
+  color: #777;
+  padding: 10rpx 10rpx 5rpx 20rpx;
+}
+
+.daohang {
+  display: flex;
+  border-bottom:1px solid #ccc;
+  background:#fff;
+}
+
+.daohang_address {
+  flex: 1;
+}
+
+.daohang_distance {
+  width: 150rpx;
+  font-size: 28rpx;
+  padding-top: 25rpx;
+}
+
+.daohang_map {
+  width: 200rpx;
+  font-size: 28rpx;
+}
+
+.daohang_map image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-top: 10rpx;
+  margin-left: 5rpx;
+}
+
+.nav_nav {
+  width: 120rpx;
+  height: 50rpx;
+  border-radius: 10rpx;
+  margin: 30rpx;
+  border: 1px solid #eee;
+}
+.nav_nav image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-top: 10rpx;
+  margin-left: 5rpx;
+}
+.phone{
+  height: 100rpx;
+  display: flex;
+  background:#fff;
+  padding-left:20rpx;
+}
+.phone_number{
+  flex: 1;
+  font-size:28rpx;
+  line-height: 100rpx;
+}
+.phone_right{
+  width: 200rpx;
+  font-size: 28rpx;
+}
+.nav_nav1 {
+  width: 120rpx;
+  height: 50rpx;
+  border-radius: 10rpx;
+  /* margin: 30rpx; */
+  margin:25rpx;
+  border: 1px solid #eee;
+}
+.nav_nav1 image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-top: 10rpx;
+  margin-left: 5rpx;
+}
+.mdfw{
+  height:80rpx;
+  line-height: 80rpx;
+  padding-left: 20rpx;
+  font-size:24rpx;
+  border-bottom:1px solid #ccc;
+  background:#fff;
+  margin-top:20rpx;
+}
+.q_bot{
+  width:100%;
+  height: 120rpx;
+  background:#fff;
+}
+.q_bot_q{
+  float:left;
+  width:auto;
+  font-size:28rpx;
+  height:40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  margin-left:20rpx;
+  margin-top:20rpx; 
+  margin-bottom:10rpx;  
+  background: rgb(238, 158, 10);
+  padding:3rpx;
+  border-radius:5rpx;
+       
+}

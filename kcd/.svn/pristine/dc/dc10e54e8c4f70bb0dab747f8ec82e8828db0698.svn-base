@@ -1,0 +1,89 @@
+const app = getApp()
+Page({
+  data: {
+    listHeight: app.globalData.windowHeight,
+    scrollY: true,
+    restaurantMenuId:'',
+    inputValue:'',
+    serchgood:'',//搜索商品列表
+  },
+  onLoad: function(options) {
+    console.log(options)
+    this.setData({
+      restaurantMenuId: options.restaurantMenuId
+    })
+
+  },
+  onReady: function() {
+
+  }, 
+  addCount(e) {
+    const _typeid = e.currentTarget.dataset.typeid;
+    const _goodid = e.currentTarget.dataset.goodid;
+    const _index = e.currentTarget.dataset.index;
+    let allGoods = this.data.allGoods;
+    let num = allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+    num = num + 1;
+    allGoods[_typeid].goods[_goodid].operation[_index].goodNum = num;
+    this.setData({
+      allGoods: allGoods
+    });
+  },
+  // 减少数量
+  minusCount(e) {
+    const _typeid = e.currentTarget.dataset.typeid;
+    const _goodid = e.currentTarget.dataset.goodid;
+    const _index = e.currentTarget.dataset.index;
+    let allGoods = this.data.allGoods;
+    let num = allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+    if (num <= 0) {
+      return false;
+    }
+    num = num - 1;
+    allGoods[_typeid].goods[_goodid].operation[_index].goodNum = num;
+    this.setData({
+      allGoods: allGoods
+    });
+  },
+  bindKeyInput: function (e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+    var restaurantMenuId = this.data.restaurantMenuId;
+    var inputValue = this.data.inputValue;
+    console.log(restaurantMenuId)
+    console.log(inputValue)
+    this.address(restaurantMenuId, inputValue)
+  },
+  address(restaurantMenuId, dishesMenuName) {
+    console.log(app.globalData.host)
+    var that = this;
+    var host = app.globalData.host;
+    var url = "/catering/Routine/SelectTheMenuForMSIDim"
+    console.log(host + url)
+    console.log(this.data.latitude)
+    wx.request({
+      url: host + url,
+      data: {
+        restaurantMenuId: restaurantMenuId,
+        dishesMenuName: dishesMenuName
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: this.aa.bind(this)
+    })
+  },
+  aa(res) {
+    console.log(res)
+    var serchgood= res.data.res.result;
+    this.setData({
+      serchgood: serchgood
+    })
+  },
+  navBack(){
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

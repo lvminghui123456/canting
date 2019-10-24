@@ -1,0 +1,123 @@
+<!--index.wxml-->
+<view class="container" id='container'>
+  <swiper indicator-dots="true" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:'>
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 地点以及会员中心 -->
+  <view class="address" id='address'>
+    <view class="address_adr" bindtap='addadress'>
+      <view class="to">{{title}}</view>
+      <view class="bo">{{address}}</view>
+    </view>
+    <view class="address_mem">
+      <view class="address_img">
+        <image src="/resourse/image/members.png"></image>
+      </view>
+      <view class="zi">会员中心</view>
+    </view>
+  </view>
+  <view class='list-container' style='height:{{listHeight}}px' id='list-container'>
+    <view class="goodswrap">
+      <scroll-view scroll-y="{{scrollY}}" style="height:{{listHeight}}px" class="menu">
+        <view class="menu-item" bindtap="searchFood">
+          <navigator url="/pages/search/search">
+            <image src='/resourse/images/search.png' style='width:40rpx;height:40rpx;display: inline-block;'></image>
+            搜索
+          </navigator>
+        </view>
+        <view class="menu-item {{index == scrollNum ? 'selected':''}}" wx:for="{{menu}}" wx:key="unique" bindtap="selectMenuAct" data-id="{{index}}">
+          <image src='{{menuLogo[index]}}' style='width:40rpx;height:40rpx;'></image>
+          {{item}}
+        </view>
+      </scroll-view>
+      <scroll-view scroll-y="{{scrollY}}" style="height: {{listHeight}}px" class="goods" bindscroll="goodsScrollAct" scroll-top="{{scrollTop}}" scroll-into-view="{{toView}}">
+        <view class="box" id="{{item.viewId}}" wx:for="{{allGoods}}" wx:key="unique" wx:for-index="typeId">
+          <label class="typename">{{item.type}}</label>
+          <view wx:for="{{item.goods}}" wx:for-item="good" wx:key="unique" wx:for-index="goodId" class='good-box' wx:key="unique0">
+            <view class="good">
+              <view class="title">{{good.name}}</view>
+              <view class="desc">
+                <image src="{{good.logo}}" bindtap='showDetail' />
+                <view class="priceact">
+                  <view class="price">
+                    ¥
+                    <label class="nowprice">{{good.nowPrice}}</label>
+                  </view>
+                  <view wx:for="{{good.operation}}" wx:for-item="operation" wx:for-index="index" wx:key="unique1" data-operationid="{{operation.dishesButtonId}}">
+                    <view class='operation' wx:if="{{operation.type == 'add'}}">
+                      <view class='operation-left'>{{operation.text}}</view>
+                      <view class='operation-right'>
+                        <image src='/resourse/images/subtract.png' wx:if="{{operation.goodNum != 0}}" bindtap="minusCount" data-typeid="{{typeId}}" data-goodid="{{goodId}}" data-index="{{index}}" data-price="{{operation.price}}" data-title="{{good.name}}" />
+                        <text wx:if="{{operation.goodNum != 0}}" class='num-view'>{{operation.goodNum}}</text>
+                        <image src='/resourse/images/add.png' bindtap="addCount" data-typeid="{{typeId}}" data-goodid="{{goodId}}" data-index="{{index}}" data-price="{{operation.price}}" data-title="{{good.name}}" data-goodid="{{good.dishesMenuId}}"/>
+                      </view>
+                    </view>
+                    <view class='operation' wx:else>
+                      <view class='operation-left'>{{operation.text}}</view>
+                      <view class='operation-right'>
+                        <navigator url="/pages/gooddetail/gooddetail">
+                          <image src='/resourse/images/right.png' />
+                        </navigator>
+                      </view>
+                    </view>
+                  </view>
+
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 购物车 -->
+  <view class="shopcar" catchtouchmove="myCatchTouch" style='display:{{cartShow}}'>
+    <image src="/resourse/image/shopcarback.png"></image>
+    <view class='gwc' bindtap='showview' style="position:absolute;width:80rpx;height:80rpx;left:75rpx;top:0;">
+      <image src="/resourse/image/iconfont-shopcart.png" style="width:60rpx;height:60rpx;margin-top:10rpx;"></image>
+    </view>
+    <view class="shopcar_count">{{totalCount}}</view>
+    <view class="shopcar_price">¥{{totalPrice}}</view>
+    <view class="shopcar_pay">
+      <view style="float:left" bindtap='gotopay'>选好了</view>
+      <image src="/resourse/image/more1.png" style="float:left;"></image>
+    </view>
+  </view>
+  <!-- 购物车中的内容 -->
+  <view class="bg" style='display:{{display}}' bindtap='hideview' catchtouchmove="myCatchTouch">
+  </view>
+  <view class="bg_list" style='display:{{display}}' catchtouchmove="myCatchTouch" >
+    <view class="bg_title">
+      <view class="tit_left">
+        <image src="/resourse/image/shopcar.png"></image>
+        <view class='yxcp'>已选产品</view>
+      </view>
+      <view class="tit_right">
+        <view class='yxcp1'>清空</view>
+        <image src="/resourse/image/delete.png"></image>
+
+      </view>
+    </view>
+    <!-- 列表中的内容 -->
+    <view class="list_cont" wx:for="{{carArray}}" wx:if="{{item.num != 0}}" wx:key="unique2">
+      <text class="text_tit" wx:if="{{item.num != 0}}">{{item.name}}</text>
+      <view class="price1">
+        <view class="now" wx:if="{{item.num > 0}}">￥{{item.price*item.num}}</view>
+        <!-- <view class="old" wx:if="{{food.oldPrice}}">￥{{food.oldPrice}}</view> -->
+      </view>
+      <view class="addcut">
+        <view class='operation-right'>
+          <image src='/resourse/images/subtract.png' wx:if="{{item.num != 0}}" bindtap="minusCount" data-typeid="{{item.typeid}}" data-goodid="{{item.goodid}}" data-index="{{item.index}}" data-goodid="{{good.dishesMenuId}}"/>
+          <text wx:if="{{item.num != 0}}" class='num-view'>{{item.num}}</text>
+          <image src='/resourse/images/add.png' bindtap="addCount" data-typeid="{{item.typeid}}" data-goodid="{{item.goodid}}" data-index="{{item.index}}" wx:if="{{item.num != 0}}" data-goodid="{{good.dishesMenuId}}" />
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>

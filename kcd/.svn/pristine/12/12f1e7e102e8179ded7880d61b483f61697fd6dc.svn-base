@@ -1,0 +1,58 @@
+<view class="contaier">
+  <view class="address">
+    <view class="city" bindtap='choosecity'>{{city}}</view>
+    <view class="add_input">
+      <view class="add_input_body">
+        <image src="/resourse/image/ic_serch.png"></image>
+        <input placeholder='请输入门店名称或地址' bindtap="speedserch">{{inputValue}}</input>
+      </view>
+    </view>
+  </view>
+  <!-- 地图部分 -->
+  <view class="map">
+    <map markers="{{markers}}" longitude=" {{longitude}}" latitude="{{latitude}}" controls="{{controls}}" bindcontroltap="controltap" scale="14" bindmarkertap="markertap" bindregionchange="regionchange" show-location style="width: 100%; height: 100%;" show-location></map>
+  </view>
+  <!-- 进入点单订餐 -->
+  <view class="order" bindtap='addmain'>
+    进入菜单点餐
+  </view>
+  <!-- 折叠和收起菜单 -->
+  <cover-view class="section {{isFold?'show':'hide'}}">
+    <!-- 查看所有门店 -->
+    <cover-view class="allshop" bindtap='switch'>
+      <cover-view class="mendian">{{mendian}}</cover-view>
+      <cover-image src="{{imgurl}}"></cover-image>
+    </cover-view>
+    <cover-view class="dialog-longline"></cover-view>
+    <cover-view style="{{isFold?'overflow-y:scroll;height;200rpx':'overflow-y:scroll;height:97%'}}" class="scr">
+      <cover-view wx:for="{{shoplist1}}" wx-key="kk" class="test">
+        <cover-view class="section_img">
+          <cover-image src="{{item.restaurantImage}}"></cover-image>
+        </cover-view>
+        <cover-view class="session_content">
+          <cover-view class="q-top">
+            <cover-view class="left">
+              <cover-view class="left_tit"  bindtap='tzct' data-restaruantName="{{item.restaruantName}}" data-positionDetail="{{item.positionDetail}}"data-restaurantId="{{item.restaurantId}}">{{item.restaruantName}}</cover-view>
+              <cover-view class="left_tit1">{{item.positionDetail}}</cover-view>
+            </cover-view>
+            <cover-view class="right">
+              <cover-view class='right_top' bindtap='addshop' data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" data-positionDetail="{{item.positionDetail}}" data-restaruantName="{{item.restaruantName}}" data-distance="{{item.distance}}" data-phoneNumber="{{item.phoneNumber}}" data-specialLabelList="{{item.specialLabelList}}">
+                <cover-view class="mdxq">门店详情</cover-view>
+                <cover-image src="/resourse/image/cc-right.png"></cover-image>
+              </cover-view>
+              <cover-view class="right_distance">
+                {{item.distance}}
+              </cover-view>
+            </cover-view>
+          </cover-view>
+          <cover-view class="q_bot">
+            <cover-view class='q_bot_q' wx:for-item ="specialLabelList" wx:for="{{shoplist1[index].specialLabelList}}">
+              {{specialLabelList}}
+            </cover-view>
+          </cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+
+  </cover-view>
+</view>

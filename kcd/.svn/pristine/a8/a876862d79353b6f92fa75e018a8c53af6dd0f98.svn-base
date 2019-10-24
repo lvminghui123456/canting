@@ -1,0 +1,50 @@
+// pages/card/card.js
+//var template = require('../../template/template.js');
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    cardList:[
+      {
+        "title":"劲脆鸡腿堡(1个)+香酥鸡翅(1个)+可口可乐(1杯)",
+        "integral":100,
+        "image":"http://47.104.240.143:8082/image/I1001.png"
+      },
+      {
+        "title": "劲脆鸡腿堡(1个)+香酥鸡翅(1个)+可口可乐(1杯)",
+        "integral": 100,
+        "image": "http://47.104.240.143:8082/image/I1001.png"
+      }
+    ]
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    //template.tabbar("tabBar", 2, this)
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    // wx.hideTabBar({
+    //   animation: true //是否需要过渡动画
+    // })
+  },
+  navtoDetail(){
+    wx.navigateTo({
+      url: '../carddetail/carddetail'
+    })
+  }
+})

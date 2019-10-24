@@ -1,0 +1,12 @@
+<!--pages/register/register.wxml-->
+<view class='header'>
+  <image src='/resourse/images/logo1.png' class='logo'></image>
+</view>
+<view class="section">
+  <view class='member'>
+    <view class='card'>会员领卡</view>
+    <view class='text'>您还不是会员,请前往注册会员</view>
+  </view>
+  <button bindtap="navtoregister"  class='weixin' open-type="getUserInfo">会员注册</button>
+</view>
+

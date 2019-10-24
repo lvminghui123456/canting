@@ -1,0 +1,64 @@
+{
+  "pages":[
+    
+    "pages/home/home",
+    "pages/index/index",
+    "pages/card/card",
+    "pages/member/member",
+    "pages/gooddetail/gooddetail",
+    "pages/shopdetail/shopdetail",
+    "pages/choosecity/choosecity",
+    "pages/chooseaddress/chooseaddress",
+    "pages/logs/logs",
+    "pages/gooddetailAll/gooddetailAll",
+    "pages/search/search",
+    "pages/carddetail/carddetail",
+    "pages/shopcarpay/shopcarpay",
+    "pages/register/register",
+    "pages/orderdetail/orderdetail",
+    "pages/order/order",
+     "pages/speedserch/speedserch",
+      "pages/navto/navto"
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff", 
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+       
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "/resourse/image/bb.png",
+        "selectedIconPath": "/resourse/image/cc.png"
+      },
+      {
+        
+        "pagePath": "pages/navto/navto",
+        "text": "积分商城",
+        "iconPath": "/resourse/image/bb1.png",
+        "selectedIconPath": "/resourse/image/cc2.png"
+      },
+      {
+       
+        "pagePath": "pages/card/card",
+        "text": "卡券",
+        "iconPath": "/resourse/image/bb3.png",
+        "selectedIconPath": "/resourse/image/cc3.png"
+      },
+      {
+        
+        "pagePath": "pages/member/member",
+        "text": "会员",
+        "iconPath": "/resourse/image/bb4.png",
+        "selectedIconPath": "/resourse/image/cc4.png"
+      }
+    ]
+  }
+  
+  
+}
+                                                                                                                               

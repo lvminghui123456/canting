@@ -1,0 +1,60 @@
+/* pages/order/order.wxss */
+page{
+  background: #F1F1F1;
+}
+.order-list .order{
+  padding: 5rpx 20rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.order-list .order .flex{
+  display: flex;
+}
+.order-list .order .flex .view1{
+  flex: 1;
+}
+.order-list .order .flex .view2{
+  width: 150rpx;
+  text-align: right;
+}
+.order-list .order .top{
+  font-size: 24rpx;
+  line-height: 60rpx;
+  border-bottom: 2rpx solid #ccc;
+  color: #202020;
+}
+.order-list .order .con{
+  font-size: 28rpx;
+  line-height: 70rpx;
+}
+.order-list .order .con .good-name{
+  font-weight: 600;
+  padding-top: 15rpx;
+  overflow: hidden;
+  /* padding-bottom: 80rpx; */
+  position: relative;
+}
+.order-list .order .con .good-name view{
+  line-height: 40rpx;
+  background: #fff;
+  width: 100%;
+}
+.order-list .order .con .good-name .dian{
+  font-size: 24rpx;
+  font-weight: 500;
+  position: absolute;
+  left: 0;
+  bottom: 40rpx;
+}
+.order-list .order .con .good-name .all{
+  font-size: 24rpx;
+  font-weight: 500;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+}
+.order-list .order .bottom{
+  font-size: 28rpx;
+  line-height: 60rpx;
+  color: #575757;
+}

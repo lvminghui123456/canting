@@ -1,0 +1,104 @@
+// pages/carddetail/carddetail.js
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    scrollX:true,
+    imageList:[
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg",
+      "/resourse/images/card.jpg"
+    ],
+    giftList:[
+      {
+        "text":"纽有礼现金卡",
+        "price":50,
+        "num":0
+      },
+      {
+        "text": "纽有礼现金卡",
+        "price": 100,
+        "num": 0
+      },
+      {
+        "text": "纽有礼现金卡",
+        "price": 150,
+        "num": 0
+      },
+      {
+        "text": "纽有礼现金卡",
+        "price": 200,
+        "num": 0
+      }
+    ],
+    chooseImage:0,
+    goodsNum:0,
+    goodsPrice:0
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+  checkImage(e){
+    var _index = e.currentTarget.dataset.idx;
+    this.setData({
+      chooseImage: _index
+    })
+  },
+  minusCount(e){
+    var _index = e.currentTarget.dataset.index;
+    console.log(_index)
+    this.data.giftList[_index].num--;
+    var giftList = this.data.giftList;
+    var goodsNum = 0;
+    var goodsPrice = 0;
+    for (var i = 0; i < giftList.length;i++){
+      goodsNum += giftList[i].num;
+      goodsPrice += giftList[i].price * giftList[i].num;
+    }
+    this.setData({
+      giftList: this.data.giftList,
+      goodsNum: goodsNum,
+      goodsPrice: goodsPrice
+    })
+  },
+  addCount(e) {
+    var _index = e.currentTarget.dataset.index;
+    console.log(this.data.giftList[_index].num)
+    this.data.giftList[_index].num++;
+    var giftList = this.data.giftList;
+    var goodsNum = 0;
+    var goodsPrice = 0;
+    for (var i = 0; i < giftList.length; i++) {
+      goodsNum += giftList[i].num;
+      goodsPrice += giftList[i].price * giftList[i].num;
+    }
+    this.setData({
+      giftList: this.data.giftList,
+      goodsNum: goodsNum,
+      goodsPrice: goodsPrice
+    })
+  }
+})

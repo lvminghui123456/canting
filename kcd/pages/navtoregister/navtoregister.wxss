@@ -1,0 +1,144 @@
+/* pages/register/register.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+.hide{
+  display: none;
+}
+.header{
+  text-align: center;
+  padding: 40rpx;
+}
+.header .logo{
+  width: 200rpx;
+  height: 200rpx;
+}
+.section{
+  padding: 10rpx 40rpx;
+}
+.section .member{
+  text-align: center;
+  padding-bottom: 80rpx;
+}
+.section .member .card{
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 60rpx;
+}
+.section .member .text{
+  font-size: 26rpx;
+  line-height: 40rpx;
+  color: #555;
+}
+.section button{
+  background: #FFC837;
+  color: #fff;
+}
+.section .weixin{
+  margin-bottom: 50rpx;
+  background: #09BB07;
+}
+.section button::after{
+  border: none;
+  color: #fff;
+}
+.box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+.box .con{
+  background: #EEEEEE;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-top: 45%;
+}
+.box .con .title{
+  text-align: center;
+  font-size: 32rpx;
+  line-height: 80rpx;
+}
+.box .con .phone{
+  background: #fff;
+  display: flex;
+  font-size: 28rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid #ccc;
+}
+.box .con .phone .text{
+  width: 150rpx;
+}
+.box .con .phone .text text{
+  border-right: 2rpx solid #ccc;
+  padding:0 20rpx;
+}
+.box .con .phone input{
+  flex: 1;
+  height: 100%;
+}
+.box .con .phone .button{
+  width: 200rpx;
+  box-sizing: border-box;
+  padding: 15rpx 20rpx;
+  font-size: 28rpx;
+}
+.box .con .phone .button button{
+  width: 100%;
+  height: 100%;
+  font-size: 26rpx;
+  padding: 0;
+  background: #FEC425;
+  line-height: 50rpx;
+}
+.box .con .phone .button button::after{
+  border: none;
+}
+
+.box .con .code{
+  background: #fff;
+  display: flex;
+  font-size: 28rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.box .con .code .text{
+  width: 150rpx;
+}
+.box .con .code .text text{
+  border-right: 2rpx solid #ccc;
+  padding:0 20rpx;
+}
+.box .con .code input{
+  flex: 1;
+  height: 100%;
+}
+.box .con .bg{
+  width: 100%;
+  height: 20rpx;
+  background: #fff;
+}
+
+.bottom{
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  text-align: center;
+}
+.bottom .quxiao{
+  flex: 1;
+  box-sizing: border-box;
+}
+.bottom .submit{
+  flex: 1;
+  background: #FEC425;
+}
+.bottom .submit button{
+  background: #FEC425;
+}

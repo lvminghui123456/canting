@@ -1,0 +1,198 @@
+// pages/register/register.js
+const app = getApp()
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    telphone: "",
+    telcode:"",
+    hide:true,
+    code:"获取验证码",
+    disabled:false,
+    encryptedData:"",
+    iv:""
+
+  },
+  onLoad: function (options) {
+
+  },
+  onReady: function () {
+
+  },
+  showBox(){
+    var that = this;
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res)
+              that.setData({
+                hide: false,
+                encryptedData:res.encryptedData,
+                iv:res.iv
+              })
+            }
+          })
+        }
+      }
+    })
+    
+  },
+  hideBox() {
+    this.setData({
+      hide: true
+    })
+  },
+  getphone(e){
+    var val = e.detail.value;
+    this.setData({
+      telphone: val
+    });
+    console.log(this.data.telphone)
+  },
+  postcode(e) {
+    var val = e.detail.value;
+    this.setData({
+      telcode: val
+    });
+    console.log(this.data.telcode)
+  },
+  getCode: function (e) {
+    // phoneNumber
+    // openid
+    this.setData({
+      disabled: true
+    })
+    var that = this;
+    var time = 60;
+    var timer = setInterval(function(){
+      time -= 1;
+      that.setData({
+        code: time+"S"
+      })
+      if( time == 0 ){
+        clearInterval(timer)
+        that.setData({
+          code: "获取验证码",
+          disabled:false
+        })
+      }
+    },1000)
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    var url = "/catering/sendSms"
+    wx.request({
+      url: host + url, //仅为示例，并非真实的接口地址
+      method:"POST",
+      data: {
+        phoneNumber: that.data.telphone,
+        openid: app.globalData.openid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
+  },
+  submit(){
+    var that = this;
+    
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    var url = "/catering/register"
+    wx.request({
+      url: host + url, //仅为示例，并非真实的接口地址
+      method: "POST",
+      data: {
+        phoneNumber: that.data.telphone,
+        openid: app.globalData.openid,
+        restaurantId: app.globalData.resid,
+        code: that.data.telcode,
+        encryptedData: that.data.encryptedData,
+        iv: that.data.iv,
+        sessionKey: app.globalData.session_key
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data)
+        if (res.data.status == 1) {
+          app.globalData.isMember = "1";
+          app.globalData.customerId = res.data.res.customerId;
+          wx.switchTab({
+            url: '../member/member'
+          })
+        }
+      }
+    })
+    
+  },
+  getPhoneNumber: function (e) {
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+   var that = this;
+    // var host = app.globalData.host;
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res)
+              var host = app.globalData.host;
+              // var host = "http://192.168.48.108:8050";
+              var url = "/catering/validateJurisdiction"
+              wx.request({
+                url: host + url, //仅为示例，并非真实的接口地址
+                method: "POST",
+                data: {
+                  openid: app.globalData.openid,
+                  restaurantId: app.globalData.resid,
+                  encryptedData: res.encryptedData,
+                  encryptedDataP: e.detail.encryptedData,
+                  sessionKey: app.globalData.session_key,
+                  iv: res.iv,
+                  ivP: e.detail.iv,
+                },
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded' // 默认值
+                },
+                success: function (res1) {
+                  console.log(res1.data)
+                  if (res1.data.status == 1) {
+                    app.globalData.isMember = "1";
+                    app.globalData.customerId = res1.data.res.customerId;
+                    wx.switchTab({
+                      url: '../member/member'
+                    })
+                  }
+
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+    
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '麦肯姆',
+      path: '/pages/home/home'
+    }
+  }
+})

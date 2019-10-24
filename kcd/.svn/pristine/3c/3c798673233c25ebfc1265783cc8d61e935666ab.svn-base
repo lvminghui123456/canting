@@ -1,0 +1,2 @@
+<!--pages/shiyongtiaokuan/shiyongtiaokuan.wxml-->
+<image src='{{image}}' mode='widthFix'></image>

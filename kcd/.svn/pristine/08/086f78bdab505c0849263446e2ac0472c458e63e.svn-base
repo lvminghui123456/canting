@@ -1,0 +1,155 @@
+var util = require('../../utils/util.js');
+const app = getApp()
+
+Page({
+  data: {
+    longitude: "",
+    latitude: "",
+    mendian: "查看所有门店",
+    imgurl: "/resourse/image/double-arrow-top.png",
+    isFold: true,
+    city: "青岛市",
+    shoplist1:"",
+    specialLabelList:'',
+    shoplist: [{
+        id: "a11",
+        name: "金拱门那么大圆筒(朱古力)",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+      {
+        id: "a12",
+        name: "金拱门那么大圆筒1",
+        price: "16起*",
+        url: '/resourse/image/1.jpg'
+      },
+    ]
+  },
+  onShow() {
+    this.getLocation();
+
+  },
+  onLoad: function (option) {
+    console.log(option)
+    this.setData({
+      longitude:option.longitude,
+      latitude: option.latitude
+    })
+    this.address()
+  },
+  //详细信息
+  address() {
+    var that = this;
+    var host = app.globalData.host;
+    var url = "/catering/Routine/SelectTheBaseRestaurantForlo"
+    console.log(host + url)
+    console.log(this.data.latitude)
+    wx.request({
+      url: host + url,
+      data: {
+        longitude: this.data.longitude,
+        latitude: this.data.latitude
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: this.aa.bind(this)
+    })
+  },
+  aa(res) {
+    console.log(res)
+    this.setData({
+      shoplist1:res.data.res.result,
+      
+    })
+    console.log(this.data.shoplist1)
+    var title = res.data.res.result[0].restaruantName
+    var address = res.data.res.result[0].positionDetail
+  },
+  getLocation() {
+    wx.getLocation({
+      type: 'gcj02',
+      success: this.bb.bind(this)
+
+    })
+  },
+ 　bb(res) {
+    this.setData({
+      longitude: res.longitude,
+      latitude: res.latitude
+    })
+
+  },
+  // 切换
+  switch () {
+    console.log(111)
+    var that = this;
+    var type = that.data.mendian === '查看所有门店' ? '返回查看地图' : '查看所有门店';
+    var imgurl = that.data.imgurl === '/resourse/image/double-arrow-top.png' ? '/resourse/image/double-arrow-bottom.png' : '/resourse/image/double-arrow-top.png';
+    this.setData({
+      isFold: !this.data.isFold,
+      mendian: type,
+      imgurl: imgurl
+
+    })
+
+  },
+  // 点击选择城市
+  choosecity() {
+    wx.navigateTo({
+      url: '../choosecity/choosecity?id=1'
+    })
+  },
+  addshop() {
+    wx.navigateTo({
+      url: '../shopdetail/shopdetail'
+    })
+  },
+  addmain() {
+    wx.navigateTo({
+      url: '../index/index'
+    })
+  }
+})

@@ -1,0 +1,182 @@
+// pages/card/card.js
+//var template = require('../../template/template.js');
+const app = getApp()
+Page({
+
+  /**
+   * 页面的初始数据 
+   */
+  data: {
+    cardList:[],
+    creditNum:0
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    //template.tabbar("tabBar", 2, this)
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    console.log("show")
+    var that = this;
+    if (app.globalData.isMember == "1") {
+      wx.showLoading({
+        title: '卡券列表加载中',
+      })
+      //获取卡券列表
+      var host = app.globalData.host;
+      // var host = "http://192.168.48.108:8050";
+      wx.request({
+        url: host + '/catering/Card/SelectTheMenuForIntegral',
+        method: 'GET',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          openId: app.globalData.openid
+        },
+        success: function (res) {
+          if (res.data.status == "1") {
+            wx.hideLoading();
+            var data = res.data.res.result[0];
+            that.setData({
+              creditNum: data.creditNum,
+              cardList: data.menu
+            })
+          }
+
+          console.log(res)
+        }
+      })
+      
+      
+    } else {
+      
+
+    }
+  },
+  navtoDetail(e){
+    var idx = e.currentTarget.dataset.idx;
+    wx.navigateTo({
+      url: '../carddetail/carddetail?idx=' + idx
+    })
+  },
+  navtoMine(){
+    wx.switchTab({
+      url: '../member/member'
+    })
+  },
+  getTheCardMes(e){
+    wx.showLoading({
+      title: '获取卡券信息',
+    })
+    var cardId = e.currentTarget.dataset.cardid;
+    var price = e.currentTarget.dataset.price;
+    var that = this;
+    // 获取卡券信息
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    wx.request({
+      url: host + '/catering/Card/getTheCardMes',
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.openid,
+        cardId: cardId
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.status == "1") {
+          
+          var data = res.data.res.result;
+          wx.hideLoading();
+          // 领取卡券
+          wx.addCard({
+            cardList: [{
+              cardId: cardId,
+              cardExt: '{"code": "", "nonce_str": "' + data.nonce_str + '", "openid": "", "timestamp": "' + data.timestamp + '", "signature":"' + data.signature + '"}'
+            }],
+            success: function (res) {
+              console.log(res.cardList[0]) // 卡券添加结果
+              var code = res.cardList[0].code;
+              that.UpdateTheMesForIntegral(cardId,code)
+            },
+            complete: function (res) {
+              console.log(res) // 卡券添加结果
+            },
+            fail: function (res) {
+              wx.showToast({
+                title: '卡券领取失败'
+              })
+            }
+          })
+        } else if (res.data.status == "3"){
+          wx.showToast({
+            title: '积分不足',
+            icon: ''
+          })
+        }
+      },
+      complete:function(res){
+        wx.hideLoading();
+      }
+    })
+  },
+  //领取卡券后扣除积分
+  UpdateTheMesForIntegral(cardId,code){
+    var that = this;
+    console.log(cardId)
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    wx.request({
+      url: host + '/catering/Card/UpdateTheMesForIntegral',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.openid,
+        cardId: cardId,
+        code: code
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.status == "1") {
+          
+          var data = res.data.res;
+          that.setData({
+            creditNum: data.creditNum
+          })
+          wx.hideLoading();
+          // 领取卡券
+          wx.showToast({
+            title: '卡券领取成功',
+            icon: 'success'
+          })
+        } else{
+          wx.showToast({
+            title: '卡券领取成功',
+            icon: 'success'
+          })
+        }
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      }
+    })
+  }
+})

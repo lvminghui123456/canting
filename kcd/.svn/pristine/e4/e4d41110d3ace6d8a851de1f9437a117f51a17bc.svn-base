@@ -1,0 +1,133 @@
+const app = getApp()
+Page({
+  data: {
+    autoplay: false,
+    interval: 5000,
+    duration: 1000,
+    unitPrice:0,
+    goodsNum: 1,
+    goodList:[],
+    chooseGood:[]
+  },
+  onLoad: function(options) {
+    var list = [
+      {
+        title: "主食",
+        goods: [
+          {
+            price: "10",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          }
+        ]
+      },
+      {
+        title: "小食",
+        goods: [
+          {
+            price: "10",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          },
+          {
+            price: "20",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          },
+          {
+            price: "30",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          }
+        ]
+      },
+      {
+        title: "饮料",
+        goods: [
+          {
+            price: "40",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          },
+          {
+            price: "50",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          },
+          {
+            price: "60",
+            text: "那么大鲜柠特饮（可乐味）",
+            image: "/resourse/images/food.jpg",
+            goodId: "1"
+          }
+        ]
+      }
+    ];
+    var chooseGood = []; 
+    for(var i=0;i<list.length;i++){
+      chooseGood[i] = 0;
+    }
+    this.setData({
+      goodList: list,
+      chooseGood: chooseGood
+    })
+    console.log(options)
+  },
+  onReady: function() {
+    this.countUnitPrice()
+  },
+  onShow: function() {
+    console.log("显示")
+    this.countUnitPrice()
+  },
+  swiperChange(e){
+    console.log(e)
+    var listIdx = e.currentTarget.dataset.idx;
+    var goodIdx = e.detail.currentItemId;
+    var chooseGood = this.data.chooseGood;
+    chooseGood[listIdx] = goodIdx;
+    this.setData({
+      chooseGood: chooseGood
+    })
+    this.countUnitPrice()
+  },
+  countUnitPrice(){
+    var unitPrice = 0;
+    var chooseGood = this.data.chooseGood;
+    var goodList = this.data.goodList;
+    for (var i = 0; i < chooseGood.length; i++) {
+      unitPrice += Number(goodList[i].goods[chooseGood[i]].price);
+    }
+    this.setData({
+      unitPrice: unitPrice
+    })
+  },
+  addCount(e) {
+    var goodsNum = this.data.goodsNum;
+    goodsNum += 1;
+    this.setData({
+      goodsNum: goodsNum
+    })
+  },
+  // 减少数量
+  minusCount(e) {
+    var goodsNum = this.data.goodsNum;
+    if (goodsNum > 1){
+      goodsNum -= 1;
+    }
+    this.setData({
+      goodsNum: goodsNum
+    })
+  },
+  navBack() {
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

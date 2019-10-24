@@ -1,0 +1,83 @@
+/* pages/card/card.wxss */
+page{
+  background: #F9F9F9;
+}
+.card-header{
+  width: 100%;
+  height: 700rpx;
+}
+.card-header navigator{
+  width: 100%;
+  height: 100%;
+}
+.card-header navigator image{
+  width: 100%;
+  height: 100%;
+}
+.card-con{
+  width: 100%;
+  margin-top: 30rpx;
+}
+.card-con .card-box{
+  width: 100%;
+  overflow: hidden;
+  padding-top: 30rpx;
+}
+.card-con .card-box .card-title{
+  width: 100%;
+  clear: both;
+  text-indent: 32rpx;
+  font-weight: 600;
+  font-size: 32rpx;
+}
+.card-con .card-box .card{
+  width: 330rpx;
+  border-radius: 20rpx;
+  float: left;
+  margin: 20rpx 0rpx 20rpx 30rpx;
+  background: #fff;
+  box-shadow: 3rpx 3rpx 2rpx #ddd;
+}
+.card-con .card-box .card navigator{
+  width: 100%;
+  height: 100%;
+}
+.card-con .card-box .card navigator .card-image{
+  width: 100%;
+  height: 220rpx;
+  overflow: hidden;
+  border-radius: 20rpx;
+}
+.card-con .card-box .card navigator .card-image image{
+  width: 100%;
+  height: 100%;
+}
+.card-con .card-box .card navigator .card-text{
+  height: 70rpx;
+  width: 100%;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.buy-history{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  clear: both;
+  font-size: 30rpx;
+  color: #576C82;
+  display: flex;
+  justify-content:center;
+}
+.buy-history .navto-history{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+.buy-history .navto-history image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 6rpx;
+}

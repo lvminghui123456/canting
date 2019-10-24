@@ -1,0 +1,64 @@
+// pages/register/register.js
+const app = getApp()
+var WXBizDataCrypt = require('../../utils/cryptojs/RdWXBizDataCrypt.js');
+var appId = "wxfce3556db662d03a";
+var secret = 'e7bc57f411d239287cc87cc15e71f849';
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    disabled:false
+
+  },
+  onLoad: function (options) {
+
+  },
+  onReady: function () {
+
+  },
+  onShow:function(){
+    
+    app.globalData.isNavtoRes = '1';
+  },
+  onUnload:function(){
+    
+  },
+  navtoregister(){
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          var pc = new WXBizDataCrypt(appId, app.globalData.session_key)
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res)
+              //拿到getUserInfo（）取得的res.encryptedData, res.iv，调用decryptData（）解密
+              var data = pc.decryptData(res.encryptedData, res.iv)
+              // data.unionId就是咱们要的东西了
+              app.globalData.unionid = data.unionId
+              console.log('解密后 unionid: ', app.globalData.unionid)
+              wx.navigateTo({
+                url: '/pages/barregister/barregister'
+              })
+            },
+            fail: function (res) {
+              console.log(res)
+            }
+          })
+        }
+      }
+    })
+    
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: 'i麦肯姆',
+      path: '/pages/home/home'
+    }
+  }
+})

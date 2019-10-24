@@ -1,0 +1,506 @@
+const app = getApp()
+Page({
+  data: {
+    listHeight: app.globalData.windowHeight,
+    scrollY: true,
+    menu: ['新品推荐', '星厨系列', '双重满足', '经典套餐', '儿童套餐', '小食甜品'],
+    menuType: ['food', 'dust', 'bowl', 'cages', 'toys', 'tools'],
+    toView: 'food',
+    allGoods: [
+      {
+        type: '新品推荐',
+        viewId: 'food',
+        goods: [
+          {
+            name: 'Whiskas伟嘉',
+            logo: '/resourse/images/pages/good1.jpg',
+            detailImage: '/resourse/images/pages/good1.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '58',
+            goodCount: 0
+          },
+          {
+            name: 'DDTRA-PET',
+            logo: '/resourse/images/pages/good2.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '99',
+            goodCount: 0
+          },
+          {
+            name: 'Friskies猫食',
+            logo: '/resourse/images/pages/good3.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '159',
+            goodCount: 0
+          },
+          {
+            name: 'MUGGLES 麻瓜',
+            logo: '/resourse/images/pages/good4.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '88',
+            goodCount: 0
+          }
+        ]
+      },
+      {
+        type: '星厨系列',
+        viewId: 'dust',
+        goods: [
+          {
+            name: '喵嗞固态',
+            logo: '/resourse/images/pages/good5.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '32',
+            goodCount: 0
+          },
+          {
+            name: '乐洁love clear',
+            logo: '/resourse/images/pages/good6.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '27',
+            goodCount: 0
+          },
+          {
+            name: '洁珊',
+            logo: '/resourse/images/pages/good7.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '48',
+            goodCount: 0
+          },
+          {
+            name: '固态无臭Ag+',
+            logo: '/resourse/images/pages/good8.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '78',
+            goodCount: 0
+          },
+        ]
+      },
+      {
+        type: '双重满足',
+        viewId: 'bowl',
+        goods: [
+          {
+            name: '小清新猫砂盆',
+            logo: '/resourse/images/pages/good9.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '56',
+            goodCount: 0
+          },
+          {
+            name: 'Ag+抗菌猫砂盆',
+            logo: '/resourse/images/pages/good10.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '112',
+            goodCount: 0
+          }
+        ]
+      },
+      {
+        type: '经典套餐',
+        viewId: 'cages',
+        goods: [
+          {
+            name: '舒慕高档宠物棉窝',
+            logo: '/resourse/images/pages/good11.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '69',
+            goodCount: 0
+          },
+          {
+            name: '绒球疯狂石头之蒙古包',
+            logo: '/resourse/images/pages/good12.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '69',
+            goodCount: 0
+          }
+        ]
+      },
+      {
+        type: '儿童套餐',
+        viewId: 'toys',
+        goods: [
+          {
+            name: '两孔剑麻羽毛球',
+            logo: '/resourse/images/pages/good13.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '16',
+            goodCount: 0
+          },
+          {
+            name: 'Rakuten游乐转不停',
+            logo: '/resourse/images/pages/good14.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '56',
+            goodCount: 0,
+            foodId: "1"
+          }
+        ]
+      },
+      {
+        type: '小食甜品',
+        viewId: 'tools',
+        goods: [
+          {
+            name: '宠百思美毛全面圆头针梳',
+            logo: '/resourse/images/pages/good15.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+
+            nowPrice: '29',
+            goodCount: 0
+          },
+          {
+            name: '金多乐美毛刷',
+            logo: '/resourse/images/pages/good16.jpg',
+            operation: [
+              {
+                text: "套餐1",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "套餐2",
+                type: "add",
+                price: "20",
+                goodNum: 0
+              },
+              {
+                text: "第二份半价",
+                type: "type1",
+                price: "20",
+                goodNum: 0
+              }
+            ],
+            nowPrice: '29',
+            goodCount: 0
+          }
+        ]
+      }
+    ]
+  },
+  onLoad: function(options) {
+
+  },
+  onReady: function() {
+
+  }, 
+  addCount(e) {
+    const _typeid = e.currentTarget.dataset.typeid;
+    const _goodid = e.currentTarget.dataset.goodid;
+    const _index = e.currentTarget.dataset.index;
+    let allGoods = this.data.allGoods;
+    let num = allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+    num = num + 1;
+    allGoods[_typeid].goods[_goodid].operation[_index].goodNum = num;
+    this.setData({
+      allGoods: allGoods
+    });
+  },
+  // 减少数量
+  minusCount(e) {
+    const _typeid = e.currentTarget.dataset.typeid;
+    const _goodid = e.currentTarget.dataset.goodid;
+    const _index = e.currentTarget.dataset.index;
+    let allGoods = this.data.allGoods;
+    let num = allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+    if (num <= 0) {
+      return false;
+    }
+    num = num - 1;
+    allGoods[_typeid].goods[_goodid].operation[_index].goodNum = num;
+    this.setData({
+      allGoods: allGoods
+    });
+  },
+  navBack(){
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

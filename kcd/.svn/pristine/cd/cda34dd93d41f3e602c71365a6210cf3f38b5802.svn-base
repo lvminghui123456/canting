@@ -1,0 +1,46 @@
+<!--pages/carddetail/carddetail.wxml-->
+<!--pages/card/card.wxml-->
+<image src='/resourse/images/jingqingqidai.png'></image>
+<!-- <view class='card-list'>
+  <view class='card-con'>
+    <view class='card'>
+      <view class='card-left'>
+        <image src='/resourse/images/bg3.png'></image>
+      </view>
+      <view class='card-right' style='background: url("{{image}}") no-repeat right bottom;background-size: 280rpx 280rpx;'>
+        <view class='title'>
+          {{title}}
+        </view>
+      </view>
+      <view class='price'>
+        <view class='price-box'>
+          <view class='price-left'>{{integral}}</view>
+          <view class='price-right'>积分</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='text-list'>
+  <view class='text-con'>
+    <view class='text-left'>优惠说明</view>
+    <view class='text-right'>{{privilege}}</view>
+  </view>
+  <view class='text-con'>
+    <view class='text-left'>有效期</view>
+    <view class='text-right'>{{usefulLife}}</view>
+  </view>
+  <view class='text-con'>
+    <view class='text-left'>可用时段</view>
+    <view class='text-right'>{{availableTime}}</view>
+  </view>
+  <view class='text-con'>
+    <view class='text-left'>使用须知</view>
+    <view class='text-right'>
+      <view class='note'>{{noticeUse}}</view>
+    </view>
+  </view>
+</view>
+<view class='button-con'>
+  <button bindtap="buyCard" data-cardid="{{wxCardId}}">现在就兑换</button>
+</view> -->

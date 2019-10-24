@@ -1,0 +1,17 @@
+<!--pages/speedserch/speedserch.wxml-->
+ <view class="address">
+    <view class="city" bindtap='choosecity'>{{city}}</view>
+    <view class="add_input">
+      <view class="add_input_body">
+        <image src="/resourse/image/ic_serch.png"></image>
+        <input placeholder='请输入门店名称或地址' bindinput="bindKeyInput" confirm-type="search" bindconfirm="searchSubmit"></input>
+      </view>
+    </view>
+  </view>
+<view class="ser">
+快速搜索
+</view>
+<view class="serlist" wx:for="{{lable}}" wx:key="{{ke}}">
+    <view data-diccode="{{item.dicCode}}" class="listser">{{item.dicLabel}}</view>
+    
+</view>

@@ -1,0 +1,68 @@
+{
+  "pages":[
+    
+    "pages/home/home",
+    "pages/index/index",
+    "pages/card/card",
+    "pages/member/member",
+    "pages/gooddetail/gooddetail",
+    "pages/shopdetail/shopdetail",
+    "pages/choosecity/choosecity",
+    "pages/chooseaddress/chooseaddress",
+    "pages/logs/logs",
+    "pages/gooddetailAll/gooddetailAll",
+    "pages/search/search",
+    "pages/carddetail/carddetail",
+    "pages/shopcarpay/shopcarpay",
+    "pages/register/register",
+    "pages/orderdetail/orderdetail",
+    "pages/order/order",
+    "pages/speedserch/speedserch",
+    "pages/person/person",
+    "pages/integralrecord/integralrecord",
+    "pages/navtoregister/navtoregister",
+    "pages/barregister/barregister",
+    "pages/navto/navto"
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff", 
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+       
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "/resourse/image/bb.png",
+        "selectedIconPath": "/resourse/image/cc.png"
+      },
+      {
+        
+        "pagePath": "pages/index/index",
+        "text": "点餐",
+        "iconPath": "/resourse/image/bb1.png",
+        "selectedIconPath": "/resourse/image/cc2.png"
+      },
+      {
+       
+        "pagePath": "pages/card/card",
+        "text": "超级用户",
+        "iconPath": "/resourse/image/bb3.png",
+        "selectedIconPath": "/resourse/image/cc3.png"
+      },
+      {
+        
+        "pagePath": "pages/member/member",
+        "text": "我的",
+        "iconPath": "/resourse/image/bb4.png",
+        "selectedIconPath": "/resourse/image/cc4.png"
+      }
+    ]
+  }
+  
+  
+}
+                                                                                                                               

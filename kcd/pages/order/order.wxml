@@ -1,0 +1,20 @@
+<!--pages/order/order.wxml-->
+<view class='order-list'>
+  <view class='order' wx:for="{{orderList}}" bindtap='navtoDetail' data-orderid="{{item.orderId}}" wx:key="{{item.orderId}}">
+    <view class='top flex'>
+      <view class='name view1'>{{item.restaruantName}}</view>
+      <view class='state view2'>{{item.orderStatus}}</view>
+    </view>
+    <view class='con flex'>
+      <view class='good-name view1'>
+        <view class='name' wx:for="{{item.order}}" wx:for-item="good" wx:for-index="idx" wx:if="{{idx < 3 }}"  wx:key="{{item.orderItemId}}">{{good.menuName}}</view>
+        <view class='dian' wx:if="{{item.order.length > 3}}">......</view>
+      </view>
+      <view class='good-price view2'>￥{{item.orderPrice}}</view>
+    </view>
+    <view class='bottom flex'>
+      <view class='date view1'>{{item.createTime}}</view>
+      <view class='change view2'></view>
+    </view>
+  </view>
+</view>

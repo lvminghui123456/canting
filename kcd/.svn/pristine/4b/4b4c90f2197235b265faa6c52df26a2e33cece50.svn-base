@@ -1,0 +1,51 @@
+<!--pages/member/member.wxml-->
+<!-- <import src="../../template/template.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/> -->
+<view class='member-header'>
+  <view class='member-card'>
+    <view class='card-top'>
+      <image src='/resourse/images/logo.jpg' class='logo'></image>
+      <view class='name-con'>
+        <view class='name' bindtap='navtoPerson'><open-data type="userNickName"></open-data><image src='/resourse/images/title_right.png' class='title-right'></image></view>
+        <view class='jifen'>累计积分 0</view>
+      </view>
+    </view>
+    <view class='card-bottom'>
+      <view class=''>可用积分 0<image src='/resourse/images/title_right.png' class='title-right'></image></view>
+      <view class='' bindtap='navto0'>进入积分商城<image src='/resourse/images/title_right.png' class='title-right'></image></view>
+    </view>
+  </view>
+  <view class='member-data'>
+    <view class='available-integral'>
+      <view class='title'>可用积分</view>
+      <view class='num'>0</view>
+    </view>
+    <view class='available-card'>
+      <view class='title'>可用卡券</view>
+      <view class='num'>0<text class='title1'>张</text></view>
+    </view>
+  </view>
+</view>
+<!-- 菜单 -->
+<view class='member-con'>
+  <view class='li li1' bindtap='navto1'>
+    餐厅取餐订单查询
+    <image src='/resourse/images/member_right.png' class='member-right'></image>
+  </view>
+  <!-- <view class='li' bindtap='navto3'>
+    我要送礼品卡
+    <image src='/resourse/images/member_right.png' class='member-right'></image>
+  </view> -->
+  <view class='li' bindtap='navto4'>
+    积分使用规则
+    <image src='/resourse/images/member_right.png' class='member-right'></image>
+  </view>
+  <view class='li' bindtap='navto5'>
+    使用条款
+    <image src='/resourse/images/member_right.png' class='member-right'></image>
+  </view>
+  <view class='li' bindtap='navto6'>
+    隐私权政策
+    <image src='/resourse/images/member_right.png' class='member-right'></image>
+  </view>
+</view>

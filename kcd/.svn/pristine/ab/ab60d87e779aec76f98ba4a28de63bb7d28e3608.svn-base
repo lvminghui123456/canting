@@ -1,0 +1,165 @@
+// pages/member/member.js
+//var template = require('../../template/template.js');
+const app = getApp()
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    creditNum:0,
+    cardNum: "",
+    sytk: "",
+    jfgz: "",
+    ysqsm:"",
+    cardList:[]
+  },
+onShow(){
+  console.log("我要显示卡券出来")
+  var that = this;
+  wx.showTabBar({
+    //animation: true //是否需要过渡动画
+  })
+  if (app.globalData.isMember == "1") {
+    var host = app.globalData.host;
+    wx.request({
+      url: host + '/catering/Integral/SelectTheIntegralNumber',
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        customerId: app.globalData.customerId
+      },
+      success: function (res) {
+        if (res.data.status == "1") {
+          that.setData({
+            creditNum: res.data.res.result.creditNum,
+            cardNum: res.data.res.result.cardNum,
+            sytk: res.data.res.result.sytk,
+            jfgz: res.data.res.result.jfgz,
+            ysqsm: res.data.res.result.ysqsm,
+            cardList: res.data.res.result.cardList
+          })
+        }
+
+        console.log(res)
+      }
+    })
+  } else {
+    console.log(app.globalData.isNavtoRes)
+    if (app.globalData.isNavtoRes == '0'){
+      wx.navigateTo({
+        url: '/pages/navtoregister/navtoregister'
+      })
+    }else{
+      wx.switchTab({
+        url: '../home/home'
+      })
+      app.globalData.isNavtoRes = '0';
+    }
+    
+  }
+},
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    //template.tabbar("tabBar", 3, this)
+    console.log(options)
+    if (options.isMember){
+      app.globalData.isMember = options.isMember
+      app.globalData.customerId = options.customerId
+    }
+  },
+  // 进入超级会员购买商品
+  navto0() {
+    wx.switchTab({
+      url: '../card/card'
+    })
+  },
+  // 餐厅取餐订单查询
+  navto1(){
+    wx.navigateTo({
+      url: '/pages/order/order'
+    })
+  },
+  // 我要点餐
+  navto2() {
+    // wx.navigateTo({
+    //   url: '/pages/index/index'
+    // })
+  }
+  ,
+  // 我要送礼品卡
+  navto3() {
+    wx.switchTab({
+      url: '../card/card'
+    })
+  }
+  ,
+  // 积分使用规则
+  navto4() {
+    // wx.showToast({
+    //   title: '正在开发中',
+    //   icon: 'none',
+    //   duration: 1500
+    // })
+    wx.navigateTo({
+      url: '/pages/jifenshiyong/jifenshiyong'
+    })
+  }
+  ,
+  // 使用条款
+  navto5() {
+    // wx.showToast({
+    //   title: '正在开发中',
+    //   icon: 'none',
+    //   duration: 1500
+    // })
+    wx.navigateTo({
+      url: '/pages/shiyongtiaokuan/shiyongtiaokuan'
+    })
+  }
+  ,
+  // 隐私权政策
+  navto6() {
+    // wx.showToast({
+    //   title: '正在开发中',
+    //   icon: 'none',
+    //   duration: 1500
+    // })
+    wx.navigateTo({
+      url: '/pages/yinsiquan/yinsiquan'
+    })
+  },
+  navtoPerson(){
+    wx.navigateTo({
+      url: '/pages/person/person'
+    })
+  },
+  openCard(){
+    var that = this;
+    wx.openCard({
+      cardList: that.data.cardList,
+      success: function (res) { 
+        
+      }
+    })
+  },
+  navtoCredit(){
+    wx.navigateTo({
+      url: '/pages/creditrecord/creditrecord'
+    })
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '麦肯姆',
+      path: '/pages/home/home'
+    }
+  }
+})

@@ -1,0 +1,14 @@
+<!--pages/creditrecord/creditrecord.wxml-->
+<view class='header'>
+  <view class='header-left'>近期积分记录</view>
+  <view class='header-right'>积分规则>></view>
+</view>
+<view class='list'>
+  <view class='credit' wx:for="{{creditList}}">
+    <view class='credit-left'>     
+      <view class='create-time'>{{item.createTime}}</view>
+      <view class='create-text'>{{item.creditNum > 0 ? '积分累计':'扣除积分'}}</view>
+    </view>
+    <view class='credit-right'>{{item.creditNum >= 0 ? '+'+item.creditNum:item.creditNum}}积分</view>
+  </view>
+</view>

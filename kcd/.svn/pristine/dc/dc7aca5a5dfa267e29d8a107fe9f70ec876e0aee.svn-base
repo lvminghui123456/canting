@@ -1,0 +1,45 @@
+<!--pages/card/card.wxml-->
+<view class='card-list'>
+  <view class='card-con' wx:for="{{cardList}}">
+    <view class='card'>
+      <view class='card-left'>
+        <image src='/resourse/images/bg3.png'></image>
+      </view>
+      <view class='card-right' style='background: url("{{item.imageName}}") no-repeat right bottom;background-size: 280rpx 280rpx;'>
+        <view class='title'>
+          {{item.dishesCreditName}}
+        </view>
+        <view class='detail'>
+          <view class='check-detail' style='margin-right:60rpx;' bindtap='navtoDetail' data-idx="{{index}}">查看详情</view>
+          <view class='redeem-now' bindtap='getTheCardMes' data-cardid="{{item.wxCardId}}" data-price="{{item.creditPrice}}">立即兑换</view>
+        </view>
+      </view>
+      <view class='price'>
+        <view class='price-box'>
+          
+          <view class='price-left'>{{item.creditPrice}}</view>
+          <view class='price-right'>积分</view>
+        </view> 
+      </view>
+    </view>
+  </view>
+  <view class='card-con' style='border:0;'>
+    <view class='card' style='background:#F4F4F4;'>
+      <view class='card-left'>
+        <image src='/resourse/images/bg2.png'></image>
+      </view>
+      <view class='card-right' style=' color:#aaa;line-height:270rpx; font-size:32rpx;text-align:center;'>
+        更多优惠券陆续添加中...
+      </view>
+    </view>
+  </view>
+</view>
+<view class='bottom'>
+  <view class='jifen'><text>{{creditNum}}</text>积分</view>
+  <view class='mine'>
+    <view class='box'></view>
+    <view class='touxiang'><open-data type="userAvatarUrl"></open-data></view>
+    <text bindtap='navtoMine'>个人中心</text>
+    <image src='/resourse/images/member_right.png'></image>
+  </view>
+</view>

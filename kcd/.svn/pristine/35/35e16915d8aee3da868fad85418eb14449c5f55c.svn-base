@@ -1,0 +1,59 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <swiper indicator-dots="true" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:'>
+    <block wx:for="{{imgUrls}}" wx:key="{{ke}}">
+      <swiper-item>
+        <image src="{{item.imageName}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!--  主题部分-->
+  <view class="mainbody" style='height:{{bodyheight}}px'>
+    <view class="order">
+      <view class="order-left" bindtap='handleresindex'>
+        <view class="top">
+          <image src="/resourse/image/card.png"></image>
+
+        </view>
+        <view class="bottom">点餐</view>
+
+      </view>
+      <view class="order-right" bindtap='handlerescard'>
+        <view class="top">
+          <image src="/resourse/image/card.png"></image>
+
+        </view>
+        <view class="bottom">纽有礼</view>
+      </view>
+    </view>
+    <view class="order1">
+      <view class="order1-left">
+        <view class="top-let"bindtap='handleresjifen' >
+          <view class="top">
+            <image src="/resourse/image/card.png"></image>
+
+          </view>
+          <view class="bottom">积分商城</view>
+        </view>
+         <view class="top-right" bindtap='handleresmember'>
+        <view class="order1-center">
+          <view class="top">
+            <image src="/resourse/image/card.png"></image>
+
+          </view>
+          <view class="bottom">会员中心</view>
+        </view>
+      </view>
+      </view>
+     
+
+      <view class="order1-right" bindtap='handleresnew'>
+        <view class="top">
+          <image src="/resourse/image/card.png"></image>
+
+        </view>
+        <view class="bottom">New乐园</view>
+      </view>
+    </view>
+  </view>
+</view>

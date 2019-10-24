@@ -1,0 +1,45 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <swiper indicator-dots="true" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:'>
+    <block wx:for="{{imgUrls}}" wx:key="{{ke}}">
+      <swiper-item>
+        <image src="{{item.imageName}}" class="slide-image" width="355" height="150" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!--  主题部分-->
+  <view class="mainbody" style='height:{{bodyheight}}px'>
+    <view class="order" style="margin-top:10rpx">
+      <view class="order-left">
+        <image src="/resourse/image/members.png"></image>
+      </view>
+      <view class="order-right">
+      <view class="text">点餐</view>
+      </view>
+    </view>
+    <view class="order">
+      <view class="order-left">
+       <image src="/resourse/image/can.png"></image>
+      </view>
+      <view class="order-right">
+       <view class="text">超级会员</view>
+      </view>
+    </view>
+    <view class="order">
+      <view class="order-left">
+      <image src="/resourse/image/can.png"></image>
+      </view>
+      <view class="order-right">
+       <view class="text">纽有礼</view>
+      </view>
+    </view>
+    <view class="order">
+      <view class="order-left">
+      <image src="/resourse/image/card.png"></image>
+      </view>
+      <view class="order-right">
+       <view class="text">New乐园</view>
+      </view>
+    </view>
+  </view>
+</view>

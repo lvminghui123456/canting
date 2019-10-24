@@ -1,0 +1,171 @@
+// pages/carddetail/carddetail.js
+const app = getApp()
+var util = require('../../utils/util.js')
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    title: "",
+    integral: 0,
+    image: "",
+    privilege: "",//优惠说明
+    usefulLife: "",//有效期
+    availableTime: "",//可用时段
+    noticeUse: "",//使用须知
+    wxCardId: "",//卡券ID
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(options)
+    if (options) {
+      var pages = getCurrentPages();
+      var prevPage = pages[pages.length - 2];  //上一个页面
+      var info = prevPage.data.cardList[options.idx]; //取上页data里的数据也可以修改
+      console.log(info)
+      this.setData({
+        title: info.dishesCreditName,
+        integral: info.creditPrice,
+        image: info.imageName,
+        privilege: info.privilege,
+        usefulLife: info.usefulLife,
+        availableTime: info.availableTime,
+        noticeUse: info.noticeUse,
+        wxCardId: info.wxCardId
+      })
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+  buyCard(e){
+    wx.showLoading({
+      title: '获取卡券信息',
+    })
+    var cardId = e.currentTarget.dataset.cardid;
+    var that = this;
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    wx.request({
+      url: host + '/catering/Card/getTheCardMes',
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.openid,
+        cardId: cardId
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.status == "1") {
+          console.log(res)
+          var data = res.data.res.result;
+          wx.hideLoading();
+          wx.addCard({
+            cardList: [{
+              cardId: cardId,
+              cardExt: '{"code": "", "nonce_str": "' + data.nonce_str + '", "openid": "", "timestamp": "' + data.timestamp + '", "signature":"' + data.signature + '"}'
+            }],
+            success: function (res) {
+              console.log(res.cardList) // 卡券添加结果
+              var code = res.cardList[0].code;
+              that.UpdateTheMesForIntegral(cardId, code)
+            },
+            complete: function (res) {
+              console.log(res) // 卡券添加结果
+            },
+            fail:function(res){
+              wx.showToast({
+                title: '卡券领取失败'
+              })
+            }
+          })
+        } else if (res.data.status == "3") {
+          wx.showToast({
+            title: '积分不足',
+            icon: ''
+          })
+        }
+      }
+    })
+  },
+  //领取卡券后扣除积分
+  UpdateTheMesForIntegral(cardId, code) {
+    var that = this;
+    console.log(cardId)
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    wx.request({
+      url: host + '/catering/Card/UpdateTheMesForIntegral',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        openId: app.globalData.openid,
+        cardId: cardId,
+        code: code
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.status == "1") {
+
+          var data = res.data.res;
+          that.setData({
+            creditNum: data.creditNum
+          })
+          wx.hideLoading();
+          // 领取卡券
+          setTimeout(() => {
+            wx.showToast({
+              title: '卡券领取成功',
+              icon: 'success'
+            })
+            setTimeout(() => {
+              wx.hideToast();
+            }, 2000)
+          }, 0);
+        } else {
+          setTimeout(() => {
+            wx.showToast({
+              title: '卡券领取成功',
+              icon: 'success'
+            })
+            setTimeout(() => {
+              wx.hideToast();
+            }, 2000)
+          }, 0);
+        }
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      }
+    })
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: 'r麦肯姆',
+      path: '/pages/home/home'
+    }
+  }
+})

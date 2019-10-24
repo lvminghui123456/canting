@@ -1,0 +1,63 @@
+<view class="container">
+  <view class='top-box'>
+    <view class='goods-list' wx:for="{{goodList}}" wx:for-index="idx" wx:for-item="item">
+      <view class='title'>
+        {{item.title}}
+        <view class='title-right' wx:if="{{item.goods.length > 1}}">
+          <navigator url="/pages/gooddetailAll/gooddetailAll?idx={{idx}}&goodIdx={{chooseGood[idx]}}">
+          全部
+          <image src='/resourse/images/title_right.png'></image>
+          </navigator>
+        </view>
+      </view>
+      <swiper indicator-dots="{{item.goods.length > 1 ? true : false}}"
+        autoplay="{{autoplay}}" 
+        interval="{{interval}}" 
+        duration="{{duration}}"
+        circular="{{true}}"
+        indicator-active-color="rgba(253,221,23, .7)"
+        indicator-color="rgba(236,236,236, .7)"
+        class='swiper-container'
+        bindchange="swiperChange"
+        data-idx="{{idx}}"
+        current="{{chooseGood[idx]}}">
+        <block wx:for="{{item.goods}}" wx:for-item="images" wx:for-index="goodIdx">
+          <swiper-item item-id="{{goodIdx}}">
+            <image src="{{images.image}}" class="slide-image"/>
+            <view class='image-text'>{{images.text}}</view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  </view>
+  <view class='bottom-box'>
+    <view class='unit-price'>
+      <view class='unit-container'>
+        <view class='unit-left'>
+          单价
+          <text style='font-size:26rpx;'>￥</text>
+          <text style='font-size:34rpx;font-weight:600;'>{{unitPrice}}</text>
+        </view>
+        <view class='unit-right'>
+          <image src='/resourse/images/subtract1.png' bindtap="minusCount"/>
+          <text class='num-view'>{{goodsNum}}</text>
+          <image src='/resourse/images/add1.png' bindtap="addCount"/>
+        </view>
+      </view>
+    </view>
+    <view class='total-price'>
+      <view class='total-left'>
+        合计
+        <text style='font-size:26rpx; color:#fff;'>￥</text>
+        <text style='font-size:34rpx;font-weight:600;color:#fff;'>{{unitPrice*goodsNum}}</text>
+      </view>
+      <view class='total-right'>
+        <view class='right-container' bindtap='navBack'>
+            加入购物车
+            <image src='/resourse/images/total_right.png'></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+</view>

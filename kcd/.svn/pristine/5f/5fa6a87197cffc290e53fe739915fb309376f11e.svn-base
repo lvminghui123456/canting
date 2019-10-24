@@ -1,0 +1,44 @@
+<view class="container">
+  <view class="img">
+    <image src="/resourse/image/1.jpg"></image>
+  </view>
+  <!-- daohang -->
+  <view class="daohang">
+    <view class="daohang_address">
+      <view class="to">青岛麦当劳金水路李大餐厅</view>
+      <view class="bo">山东省青岛市李沧区铜川路216号李大挂钩负一层</view>
+    </view>
+    <view class="daohang_distance">
+      4.1千米
+    </view>
+    <view class="daohang_map">
+      <view class="nav_nav" bindtap="adddh">
+        <image src="/resourse/image/nav.png"></image>
+        导航
+      </view>
+    </view>
+  </view>
+  <!-- dianhua -->
+  <view class="phone">
+    <view class="phone_number">0532-999999999</view>
+    <view class="phone_right">
+      <view class="nav_nav1" bindtap='phonecall'>
+        <image src="/resourse/image/phone.png"></image>
+        电话
+      </view>
+    </view>
+  </view>
+  <!-- 门店服务 -->
+  <view class="mdfw">
+    门店服务
+  </view>
+  <view class="q_bot">
+    <view class='q_bot_q'>
+      亲子活动
+    </view>
+  </view>
+  <!-- 进入点单订餐 -->
+  <view class="order">
+    进入菜单点餐
+  </view>
+</view>

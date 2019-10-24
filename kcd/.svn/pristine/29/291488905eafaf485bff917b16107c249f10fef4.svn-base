@@ -1,0 +1,40 @@
+<!--pages/card/card.wxml-->
+<view class='card-header'>
+  <image src='/resourse/images/cardlogo.jpg'></image>
+</view>
+<view class='card-con'>
+    <view class='card-box'>
+      <view class='card-title'>
+        来杯咖啡吧！
+      </view>
+      <view class='card'>
+        <view class='card-image'>
+          <image src='/resourse/images/card.jpg'></image>
+        </view>
+        <view class='card-text'>
+          一起去玩吧
+        </view>
+      </view>
+      <view class='card'>
+        <view class='card-image'>
+          <image src='/resourse/images/card.jpg'></image>
+        </view>
+        <view class='card-text'>
+          一起去玩吧
+        </view>
+      </view>
+      <view class='card'>
+        <view class='card-image'>
+          <image src='/resourse/images/card.jpg'></image>
+        </view>
+        <view class='card-text'>
+          一起去玩吧
+        </view>
+      </view>
+    </view>
+</view>
+<view class='buy-history'>
+  <label class='navto-history'>
+    <image src='/resourse/images/history.png'></image>购买历史
+  </label>
+</view>

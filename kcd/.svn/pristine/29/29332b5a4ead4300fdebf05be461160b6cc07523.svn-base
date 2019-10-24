@@ -1,0 +1,21 @@
+<!--pages/order/order.wxml-->
+<view class='order-list'>
+  <view class='order' wx:for="{{orderList}}">
+    <view class='top flex'>
+      <view class='name view1'>{{item.name}}</view>
+      <view class='state view2'>{{item.state}}</view>
+    </view>
+    <view class='con flex'>
+      <view class='good-name view1'>
+        <view class='name' wx:for="{{item.goodList}}" wx:for-item="good">{{good}}</view>
+        <!-- <view class='dian' wx:if="{{item.goodList.length > 3}}">......</view>
+        <view class='all'  wx:if="{{item.goodList.length > 3}}" data-index="{{index}}" catchtap="allShow">共{{item.goodList.length}}件</view> -->
+      </view>
+      <view class='good-price view2'>￥{{item.goodPrice}}</view>
+    </view>
+    <view class='bottom flex'>
+      <view class='date view1'>{{item.date}}</view>
+      <view class='change view2'>{{item.change}}</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,92 @@
+// pages/register/register.js
+const app = getApp()
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    telphone: "",
+    telcode:"",
+    hide:true
+  },
+  onLoad: function (options) {
+
+  },
+  onReady: function () {
+
+  },
+  showBox(){
+    this.setData({
+      hide:false
+    })
+  },
+  hideBox() {
+    this.setData({
+      hide: true
+    })
+  },
+  getphone(e){
+    var val = e.detail.value;
+    this.setData({
+      telphone: val
+    });
+    console.log(this.data.telphone)
+  },
+  postcode(e) {
+    var val = e.detail.value;
+    this.setData({
+      telcode: val
+    });
+    console.log(this.data.telcode)
+  },
+  getCode: function (e) {
+    // phoneNumber
+    // openid
+    var that = this;
+    var host = app.globalData.host;
+    // var host = "http://192.168.48.108:8050";
+    var url = "/catering/sendSms"
+    wx.request({
+      url: host + url, //仅为示例，并非真实的接口地址
+      method:"POST",
+      data: {
+        phoneNumber: that.data.telphone,
+        openid: app.globalData.openid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
+  },
+  submit(){
+    this.setData({
+      hide: true
+    })
+    var that = this;
+    wx.navigateBack({
+      delta: 1
+    })
+
+    // var host = app.globalData.host;
+    // // var host = "http://192.168.48.108:8050";
+    // var url = "/catering/sendSms"
+    // wx.request({
+    //   url: host + url, //仅为示例，并非真实的接口地址
+    //   method: "POST",
+    //   data: {
+    //     phoneNumber: that.data.telphone,
+    //     openid: that.data.telphone
+    //   },
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded' // 默认值
+    //   },
+    //   success: function (res) {
+    //     console.log(res.data)
+    //   }
+    // })
+  } 
+})

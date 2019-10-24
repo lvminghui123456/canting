@@ -1,0 +1,776 @@
+//index.js
+//获取应用实例
+const app = getApp()
+var QQMapWX = require('/qqmap-wx-jssdk.js');
+var qqmapsdk;
+Page({
+  data: {
+    imgUrls: "",
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    scrollHeight: app.globalData.windowHeight,
+    //toView: "",
+    display: "none",
+    cartShow: "none",
+    title: '', //餐厅名称
+    address: '', //餐厅具体地址
+    cutnum: 0,
+    shopnumber: 0,
+    totalPrice: 0, // 总价格
+    totalCount: 0, // 总商品数
+    carArray: [],
+    listHeight: app.globalData.windowHeight,
+    scrollY: false,
+    menu: "",
+    menuType: "",
+    menuLogo: "",
+    toView: 'food',
+    allGoods: '',
+    scrollNum: 0,
+    scrollTop: 0,
+    typeHeight: 43,
+    goodHeight: 175,
+    detailFlag: true,
+    longitude: '', //经纬度
+    latitude: '', //经纬度
+    restaurantMenuId: '', //门店id
+  },
+  onLoad(options) {
+    console.log("onload")
+    console.log(options)
+    
+   
+    if (options.restaurantid == undefined) {
+      var that = this
+      wx.getLocation({
+        type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+        success: function (res) {
+          // var latitude = res.latitude
+          // var longitude = res.longitude            
+          that.setData({
+            latitude: res.latitude,
+            longitude: res.longitude
+          })
+          console.log(that.data.latitude)
+          that.address();
+          console.log(that.data.restaurantId)
+        }
+      })
+    } else {
+      
+      console.log("我是跳转过来的")
+     
+      if (options.restaurantid == app.globalData.resid){
+         this.setData({
+        title: options.restaruantName,
+        address: options.positiondetail,
+        restaurantMenuId: options.restaurantid
+      })
+        this.shoplist();
+      }else{
+        try {
+          wx.removeStorageSync('cart')
+          wx.removeStorageSync('allGoods')
+        } catch (e) {
+          // Do something when catch error
+        }
+        this.setData({
+          title: options.restaruantName,
+          address: options.positiondetail,
+          restaurantMenuId: options.restaurantid
+        })
+        app.globalData.resid = options.restaurantid;
+        this.shoplist();
+       
+      }
+      
+
+    }
+    //获取经纬度
+    // var that = this
+    // wx.getLocation({
+    //   type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+    //   success: function(res) {
+    //     // var latitude = res.latitude
+    //     // var longitude = res.longitude            
+    //     that.setData({
+    //       latitude: res.latitude,
+    //       longitude: res.longitude
+    //     })
+    //     console.log(that.data.latitude)
+    //     that.address();
+    //     console.log(that.data.restaurantId)
+    //   }
+    // })
+    //轮播
+    this.swiper()
+    
+   
+    //轮播
+    this.swiper()
+   
+
+  },
+  onShow() {
+    console.log("onshow")
+    
+  },
+  //获取当前的门店地址和id
+  address() {
+    console.log(app.globalData.host)
+    var that = this;
+    var host = app.globalData.host;
+    var url = "/catering/Routine/SelectTheBaseRestaurantForlo"
+    console.log(host + url)
+    console.log(this.data.latitude)
+    wx.request({
+      url: host + url,
+      data: {
+        longitude: this.data.longitude,
+        latitude: this.data.latitude
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: this.aa.bind(this)
+      
+    })
+  },
+  aa(res) {
+    console.log(res)
+    var title = res.data.res.result[0].restaruantName
+    var address = res.data.res.result[0].positionDetail
+    var restaurantId = res.data.res.result[0].restaurantId
+    // if(options){
+    //   console.log("我是存在的")
+    // }
+    console.log(this.data.title)
+    this.setData({
+          title: title,
+          address: address,
+          restaurantMenuId: restaurantId
+     })
+    app.globalData.resid = restaurantId;
+    // if(this.data.title==undefined){
+    //   console.log("我是运来的")
+    
+     
+    // }else{
+    //   console.log("我是跳转过来的")
+    //   // for (var i = 0; i < res.data.res.result.length;i++){
+    //   //   if(res.data.res.result[i].restaurantId ==this.data.restaurantMenuId){
+    //   //     console.log("没有变化")
+    //   //   }else{
+    //   //     try {
+    //   //       wx.removeStorageSync('cart')
+    //   //       wx.removeStorageSync('allGoods')
+    //   //     } catch (e) {
+    //   //       // Do something when catch error
+    //   //     }
+    //   //   }
+    //   // }
+    //   if (restaurantId == this.data.restaurantMenuId){
+      
+    //    console.log("没有变化")
+    //   }else{
+    //     console.log("发生了变化")
+    //     console.log(this.data.allGoods)
+    //     // this.clearcar();
+    //     try {
+    //       wx.removeStorageSync('cart')
+    //       wx.removeStorageSync('allGoods')
+    //     } catch (e) {
+    //       // Do something when catch error
+    //     }
+    //     // this.setData({
+    //     //   carArray:[],
+    //     //   allGoods:this.data.allGoods
+    //     // })
+       
+    //   }
+      
+    // }
+   
+    this.shoplist();
+
+  },
+  //商品列表的详细信息
+  shoplist() {
+    //商品详细信息
+    wx.showLoading({
+      title: '商品列表加载中',
+    })
+    var that = this;
+    var host = app.globalData.host;
+    var url = "/catering/Routine/SelectTheMenuForMSI"
+    console.log(that.data.restaurantMenuId)
+    wx.request({
+      url: host + url,
+      data: {
+        restaurantMenuId: that.data.restaurantMenuId,
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: this.handleshoplist.bind(this)
+    })
+  },
+  handleshoplist(res) {
+    console.log(res)
+    wx.hideLoading()
+    var allGoods = res.data.res.result.allGoods
+    var menu = res.data.res.result.menu
+    var menuType = res.data.res.result.menuType
+    var menuLogo = res.data.res.result.menuLogo
+    this.setData({
+      allGoods: allGoods,
+      menu: menu,
+      menuType: menuType,
+      toView: "M1001",
+      menuLogo: menuLogo
+    })
+    console.log(this.data.allGoods)
+
+     this.syccart()
+
+  },
+  //获取轮播图片的信息
+  swiper() {
+    var that = this;
+    var host = app.globalData.host;
+    var url = "/catering/Routine/SelectTheCyclePictureNowAll"
+    console.log(host + url)
+    wx.request({
+      url: host + url,
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: this.handleswipwer.bind(this)
+    })
+  },
+  handleswipwer(res) {
+    console.log(res)
+    var imgurl = res.data.res.result;
+    this.setData({
+      imgUrls: imgurl
+    })
+  },
+  //点击跳转到门店详情
+  addadress() {
+    console.log(111)
+    // wx.navigateTo({
+    //   url: '../chooseaddress/chooseaddress?longitude=' + this.data.longitude + '&latitude=' + this.data.latitude + ''
+    // })
+    wx.navigateTo({
+      url: '../chooseaddress/chooseaddress'
+    })
+  },
+  jumpTo: function(e) {
+
+    // 获取标签元素上自定义的 data-opt 属性的值
+    let target = e.target.id;
+
+    this.setData({
+      toView: target
+    })
+    console.log(target)
+  },
+  onReachBottom() {
+    this.setData({
+      scrollY: true
+    })
+  },
+  onPageScroll(e) {
+    // console.log(e)
+    if (e.scrollTop == 0) {
+      this.setData({
+        scrollY: false
+      })
+    }
+  },
+  goodsScrollAct: function(e) {
+    var typeCount = this.data.menu.length; //获取菜单栏长度
+    var goodsCount = 0; // 商品个数
+    this.data.allGoods.forEach((item) => {
+      goodsCount += item.goods.length;
+    });
+
+    var heightList = [0];
+    var curHeight = 0;
+    this.data.allGoods.forEach((item) => {
+      curHeight += (this.data.typeHeight + item.goods.length * this.data.goodHeight);
+      heightList.push(curHeight);
+    });
+
+    for (var i = 0; i < heightList.length; i++) {
+      console.log(e.detail.scrollTop)
+      console.log(heightList)
+      if (e.detail.scrollTop >= heightList[i] && e.detail.scrollTop < heightList[i + 1]) {
+        this.setData({
+          scrollNum: i
+        });
+      }
+    }
+  },
+  selectMenuAct: function(e) {
+    this.setData({
+      scrollY: true
+    })
+    try {
+      var res = wx.getSystemInfoSync()
+      this.setData({
+        listHeight: res.windowHeight
+      })
+    } catch (e) {
+      // Do something when catch error
+    }
+    var that = this;
+    wx.createSelectorQuery().select('#list-container').boundingClientRect(function(rect) {
+      wx.createSelectorQuery().selectViewport().scrollOffset(function(res) {
+        if (res.scrollTop == 0) {
+          wx.pageScrollTo({
+            scrollTop: 10000
+          })
+        }
+        if (rect.top <= 4) {
+
+        } else {
+          wx.pageScrollTo({
+            scrollTop: 10000
+          })
+        }
+      }).exec()
+    }).exec()
+    var id = e.target.dataset.id;
+    var tType = this.data.menuType[id];
+    console.log(id)
+    this.setData({
+      scrollNum: id,
+      toView: tType
+    });
+  },
+  //获取商品缓存信息
+  syccart() {
+    //缓存
+    var cart = wx.getStorageSync("cart");
+    var allGoods1 = wx.getStorageSync("allGoods");
+
+    if (cart) {
+      this.setData({
+        carArray: cart,
+        allGoods: allGoods1
+      })
+      console.log(this.data.carArray)
+      console.log(this.data.allGoods)
+      for (var i = 0; i < this.data.carArray.length; i++) {
+        if (this.data.carArray[i].goodNum > 0) {
+          console.log(1)
+          this.setData({
+            cartShow: 'block'
+          })
+          this.calTotalPrice()
+        }
+
+
+      }
+
+
+    }
+    if (allGoods1) {
+      try {
+        //wx.setStorageSync('cart', arr)
+        wx.setStorageSync('allGoods', allGoods1)
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      try {
+        //wx.setStorageSync('cart', arr)
+        wx.setStorageSync('allGoods', this.data.allGoods)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+
+  //增加商品数量
+  addCount(e) {
+    console.log(e)
+    var _typeid = e.currentTarget.dataset.typeid;
+    var _goodid = e.currentTarget.dataset.goodid;
+    var _index = e.currentTarget.dataset.index;
+    var types = e.currentTarget.dataset.types;
+    console.log(types)
+    if (types == "add") {
+      console.log("我是愿数组")
+      this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum++;
+      var mark = 'a' + _typeid + 'b' + _goodid + 'c' + _index;
+      var price = this.data.allGoods[_typeid].goods[_goodid].nowPrice;
+      var goodNum = this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+      var name = this.data.allGoods[_typeid].goods[_goodid].name;
+      var typeid = this.data.allGoods[_typeid].menuId;
+      var goodid = this.data.allGoods[_typeid].goods[_goodid].dishesMenuId;
+      var operationid = this.data.allGoods[_typeid].goods[_goodid].operation[_index].dishesButtonId;
+      var typ = this.data.allGoods[_typeid].goods[_goodid].operation[_index].type;
+      var obj = {
+        price: price,
+        goodNum: goodNum,
+        //mark: mark,
+        name: name,
+        typeid: typeid,
+        goodid: goodid,
+        operationid: operationid,
+        index: _index,
+        typeid1: _typeid,
+        goodid1: _goodid,
+        types: typ
+      };
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          if (arr[j].goodid == goodid) {
+            arr[j].goodNum += 1;
+            f = true;
+            try {
+              wx.setStorageSync('cart', arr)
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+        }
+        if (!f) {
+          arr.push(obj);
+        }
+      } else {
+        arr.push(obj);
+      }
+      // this.setData({
+      //   carArray: arr,
+      //   allGoods: this.data.allGoods
+      // })
+      // try {
+      //   wx.setStorageSync('cart', arr)
+      //   wx.setStorageSync('allGoods', this.data.allGoods)
+      // } catch (e) {
+      //   console.log(e)
+      // }
+
+      // this.calTotalPrice();
+      // console.log(this.data.allGoods)
+      // console.log(e)
+      // if (goodNum > 0) {
+      //   this.setData({
+      //     cartShow: 'block'
+      //   })
+      // }
+    } else { //定制数组
+      console.log("我是现在数组")
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      console.log(arr)
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          console.log(arr[j].goodid)
+          console.log(e.currentTarget.dataset.goodsid)
+          if (arr[j].goodid == e.currentTarget.dataset.goodsid) {
+            arr[j].goodNum += 1;
+            f = true;
+            try {
+              wx.setStorageSync('cart', arr)
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+        }
+        if (!f) {
+          arr.push(obj);
+        }
+      } else {
+        arr.push(obj);
+        console.log(arr)
+      }
+
+    }
+    this.setData({
+      carArray: arr,
+      allGoods: this.data.allGoods
+    })
+    try {
+      wx.setStorageSync('cart', arr)
+      wx.setStorageSync('allGoods', this.data.allGoods)
+    } catch (e) {
+      console.log(e)
+    }
+
+    this.calTotalPrice();
+    console.log(this.data.allGoods)
+    console.log(e)
+    if (goodNum > 0) {
+      this.setData({
+        cartShow: 'block'
+      })
+    }
+    // var carArray1 = this.data.carArray.filter(item => item.mark != mark)
+    // console.log(carArray1)
+    // carArray1.push(obj)
+
+    // this.setData({
+    //   carArray: arr,
+    //   allGoods: this.data.allGoods
+    // })
+    // try {
+    //   wx.setStorageSync('cart', arr)
+    //   wx.setStorageSync('allGoods', this.data.allGoods)
+    // } catch (e) {
+    //   console.log(e)
+    // }
+
+    // this.calTotalPrice();
+    // console.log(this.data.allGoods)
+    // console.log(e)
+    // if (goodNum > 0) {
+    //   this.setData({
+    //     cartShow: 'block'
+    //   })
+    // }
+    // wx.setStorage({
+    //   key: 'carArray1',
+    //   data: carArray1,
+    // })
+    // wx.setStorage({
+    //   key: 'allgoods1',
+    //   data: this.data.allGoods,
+    // })
+  },
+
+  // 定义根据id删除数组的方法
+  removeByValue: function(array, val) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].goodid == val) {
+        array.splice(i, 1);
+        break;
+      }
+    }
+  },
+  // 减少数量
+  minusCount(e) {
+    var _typeid = e.currentTarget.dataset.typeid;
+    var _goodid = e.currentTarget.dataset.goodid;
+    var _index = e.currentTarget.dataset.index;
+    var types = e.currentTarget.dataset.types;
+    console.log(e)
+    if (types == "add") {
+      console.log("我是愿数组")
+      this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum--;
+      var mark = 'a' + _typeid + 'b' + _goodid + 'c' + _index;
+      var price = this.data.allGoods[_typeid].goods[_goodid].nowPrice;
+      var goodNum = this.data.allGoods[_typeid].goods[_goodid].operation[_index].goodNum;
+      var name = this.data.allGoods[_typeid].goods[_goodid].name;
+      var typeid = this.data.allGoods[_typeid].menuId;
+      var goodid = this.data.allGoods[_typeid].goods[_goodid].dishesMenuId;
+      var operationid = this.data.allGoods[_typeid].goods[_goodid].operation[_index].dishesButtonId;
+      var obj = {
+        price: price,
+        goodNum: goodNum,
+        //mark: mark,
+        name: name,
+        typeid: typeid,
+        goodid: goodid,
+        operationid: operationid,
+        index: _index,
+        typeid1: _typeid,
+        goodid1: _goodid,
+      };
+      // var carArray1 = this.data.carArray.filter(item => item.mark != mark)
+      // console.log(carArray1)
+      // carArray1.push(obj)
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          if (arr[j].goodid == goodid) {
+            arr[j].goodNum -= 1;
+            f = true;
+            if (arr[j].goodNum <= 0) {
+
+              this.removeByValue(arr, goodid)
+
+            }
+            if (arr.length <= 0) {
+              this.setData({
+                allGoods: this.data.allGoods,
+                carArray: [],
+                totalCount: 0,
+                totalPrice: 0,
+              })
+              this.setData({
+                display: 'none',
+                cartShow: 'none'
+              })
+
+            }
+          }
+
+        }
+
+      }
+    } else { //新数组
+      console.log("我是新数组")
+      var arr = wx.getStorageSync('cart') || []
+      var f = false;
+      if (arr.length > 0) {
+        console.log(arr)
+        for (var j in arr) { // 遍历购物车找到被点击的菜品，数量加1
+          console.log(arr[j].goodid)
+          console.log(e.currentTarget.dataset.goodsid)
+          if (arr[j].goodid == e.currentTarget.dataset.goodsid) {
+            console.log("我的数组大雨o")
+            arr[j].goodNum -= 1;
+
+            if (arr[j].goodNum <= 0) {
+              console.log(111)
+              this.removeByValue(arr, e.currentTarget.dataset.goodsid)
+
+            }
+            if (arr.length <= 0) {
+              this.setData({
+                allGoods: this.data.allGoods,
+                carArray: [],
+                totalCount: 0,
+                totalPrice: 0,
+              })
+              this.setData({
+                display: 'none',
+                cartShow: 'none'
+              })
+
+            }
+          }
+
+        }
+        // if (!f) {
+        //   arr.push(obj);
+        // }
+      }
+      // else {
+      //   arr.push(obj);
+      // }
+
+    }
+    //let allGoods = this.data.allGoods;
+
+    this.setData({
+      carArray: arr,
+      allGoods: this.data.allGoods
+    })
+    try {
+      wx.setStorageSync('cart', arr)
+      wx.setStorageSync('allGoods', this.data.allGoods)
+    } catch (e) {
+      console.log(e)
+    }
+
+    this.calTotalPrice();
+
+
+
+  },
+  //清空购物车
+  clearcar() {　
+    //console.log(e)
+    var carArray = this.data.carArray;
+    var allgoods = this.data.allGoods;
+    console.log(allgoods)
+    for (var i = 0; i < allgoods.length; i++) {
+      for (var j = 0; j < allgoods[i].goods.length; j++) {
+        for (var k = 0; k < allgoods[i].goods[j].operation.length; k++) {
+          allgoods[i].goods[j].operation[k].goodNum = 0
+        }
+      }
+    }
+    var totalPrice = 0;
+    var totalCount = 0;
+    console.log(allgoods)
+    this.setData({
+      allGoods: allgoods,
+      carArray: [],
+      totalCount: 0,
+      totalPrice: 0,
+      display: 'none',
+      cartShow: 'none'
+    })
+    try {
+      wx.setStorageSync('cart', this.data.carArray)
+      wx.setStorageSync('allGoods', this.data.allGoods)
+    } catch (e) {
+      console.log(e)
+    }
+
+  },
+  //计算总价
+  calTotalPrice: function() {
+    var carArray = this.data.carArray;
+    var totalPrice = 0;
+    var totalCount = 0;
+    for (var i = 0; i < carArray.length; i++) {
+      totalPrice += carArray[i].price * carArray[i].goodNum;
+      totalCount += carArray[i].goodNum
+    }
+    this.setData({
+      totalPrice: totalPrice,
+      totalCount: totalCount,
+      //payDesc: this.payDesc()
+    });
+  },
+  //修改详情页
+  // xiugai(){
+  //   console.log(111)
+  //   wx.navigateTo({
+  //     url: "/pages/gooddetail/gooddetail?goodsid={{item.gid}}&title={{item.name}}&typ={{item.types}}"
+  //   })
+  // },
+  // 显示购物车内容
+  showview: function() {
+    var that = this;
+    var display = that.data.display === 'none' ? 'block' : 'none';
+    that.setData({
+      display: display
+    })
+  },
+  hideview: function() {
+    this.setData({
+      display: "none"
+    })
+  },
+  //跳转到支付页面
+  gotopay() {
+    var totleprice = this.data.totalPrice
+    wx.navigateTo({
+      url: '../shopcarpay/shopcarpay?totleprice=' + totleprice+''
+    })
+  },
+  // 穿透
+  myCatchTouch: function() {
+    console.log('stop user scroll it!');
+    return;
+  },
+
+
+
+
+
+
+
+
+
+
+})

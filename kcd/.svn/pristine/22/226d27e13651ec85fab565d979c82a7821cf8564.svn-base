@@ -1,0 +1,97 @@
+const app = getApp()
+Page({
+  data: {
+    autoplay: false,
+    interval: 5000,
+    duration: 1000,
+    unitPrice:0,
+    goodsNum: 1,
+    goodList:"",
+    chooseGood:[]
+  },
+  onLoad: function(options) {
+    var that = this;
+    var host = app.globalData.host;
+    console.log(options.goodsid)
+    var url = "/catering/Routine/SelectTheCustomizationMenu";
+    wx.request({
+      url: host + url,
+      data: {
+        dishesMenuId: options.goodsid
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res)
+        var list = res.data.res.result;
+        var chooseGood = [];
+        for (var i = 0; i < list.length; i++) {
+          chooseGood[i] = 0;
+        }
+        that.setData({
+          goodList: list,
+          chooseGood: chooseGood
+        })
+        that.countUnitPrice()
+      }
+    })
+    
+  },
+  onReady: function() {
+    this.countUnitPrice()
+  },
+  onShow: function() {
+    console.log("显示")
+    this.countUnitPrice()
+  },
+  swiperChange(e){
+    console.log(e)
+    var listIdx = e.currentTarget.dataset.idx;
+    var goodIdx = e.detail.currentItemId;
+    var chooseGood = this.data.chooseGood;
+    chooseGood[listIdx] = goodIdx;
+    this.setData({
+      chooseGood: chooseGood
+    })
+    this.countUnitPrice()
+  },
+  countUnitPrice(){
+    var unitPrice = 0;
+    var chooseGood = this.data.chooseGood;
+    var goodList = this.data.goodList;
+    for (var i = 0; i < chooseGood.length; i++) {
+      unitPrice += Number(goodList[i].goods[chooseGood[i]].price);
+    }
+    this.setData({
+      unitPrice: unitPrice
+    })
+  },
+  addCount(e) {
+    var goodsNum = this.data.goodsNum;
+    goodsNum += 1;
+    this.setData({
+      goodsNum: goodsNum
+    })
+  },
+  // 减少数量
+  minusCount(e) {
+    var goodsNum = this.data.goodsNum;
+    if (goodsNum > 1){
+      goodsNum -= 1;
+    }
+    this.setData({
+      goodsNum: goodsNum
+    })
+  },
+  navBack() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  //lv获取定制列表里面的内容
+  custom(){
+      
+  }
+})

@@ -1,0 +1,22 @@
+{
+  "pages":[
+    "pages/home/home",
+    "pages/index/index",
+    "pages/gooddetail/gooddetail",
+    "pages/shopdetail/shopdetail",
+    "pages/choosecity/choosecity",
+    "pages/chooseaddress/chooseaddress",
+    "pages/logs/logs",
+    "pages/gooddetailAll/gooddetailAll",
+    "pages/search/search", 
+    "pages/card/card",
+    "pages/carddetail/carddetail",
+    "pages/shopcarpay/shopcarpay"     
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff", 
+    "navigationBarTextStyle":"black"
+  }
+}
+                                                                                                                               

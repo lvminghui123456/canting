@@ -1,0 +1,30 @@
+<!--pages/card/card.wxml-->
+<!-- <import src="../../template/template.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/> -->
+<view class='card-header'>
+  <navigator url="/pages/carddetail/carddetail">
+    <image src='/resourse/images/cardlogo.jpg'></image>
+  </navigator>
+</view>
+<view class='card-con'>
+    <view class='card-box' wx:for="{{cardList}}" wx:for-index="idx" wx:for-item="cardList">
+      <view class='card-title'>
+        {{cardList.title}}
+      </view>
+      <view class='card' wx:for="{{cardList.cards}}" wx:for-index="index" wx:for-item="cards">
+        <navigator url="/pages/carddetail/carddetail">
+          <view class='card-image'>
+            <image src='{{cards.cardImage}}'></image>
+          </view>
+          <view class='card-text'>
+            {{cards.text}}
+          </view>
+        </navigator>
+      </view>
+    </view>
+</view>
+<view class='buy-history'>
+  <label class='navto-history'>
+    <image src='/resourse/images/history.png'></image>购买历史
+  </label>
+</view>

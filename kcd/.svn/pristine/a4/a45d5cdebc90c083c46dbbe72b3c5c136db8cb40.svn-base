@@ -1,0 +1,49 @@
+/* pages/creditrecord/creditrecord.wxss */
+.header{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  font-size: 28rpx;
+  background: #F1F0F5;
+  color: #ACABB0;
+  text-indent: 40rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.header-left{
+  width: 50%;
+}
+.header-right{
+  flex: 1;
+  padding-right: 40rpx;
+  text-align: right;
+}
+.list{
+  padding-top: 80rpx;
+}
+.credit{
+  padding: 0 40rpx;
+  height: 160rpx;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 26rpx;
+  color: #ACABB0;
+  display: flex;
+}
+.credit-left{
+  width: 60%;
+  box-sizing: border-box;
+  padding-top: 30rpx;
+}
+.credit-left .create-time{
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #000;
+  line-height: 60rpx;
+}
+.credit-right{
+  flex: 1;
+  text-align: right;
+  line-height: 160rpx;
+}

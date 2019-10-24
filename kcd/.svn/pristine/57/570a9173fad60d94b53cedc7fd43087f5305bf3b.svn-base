@@ -1,0 +1,44 @@
+<view class="container">
+  <view class="img">
+    <image src="{{detallist.img}}"></image>
+  </view>
+  <!-- daohang -->
+  <view class="daohang">
+    <view class="daohang_address">
+      <view class="to">{{detallist.restaruantname}}</view>
+      <view class="bo">{{detallist.positiondetail}}</view>
+    </view>
+    <view class="daohang_distance">
+      {{detallist.distance}}
+    </view>
+    <view class="daohang_map">
+      <view class="nav_nav" bindtap="adddh">
+        <image src="/resourse/image/nav.png"></image>
+        导航
+      </view>
+    </view>
+  </view>
+  <!-- dianhua -->
+  <view class="phone">
+    <view class="phone_number">{{detallist.phonenumber}}</view>
+    <view class="phone_right">
+      <view class="nav_nav1" bindtap='phonecall'>
+        <image src="/resourse/image/phone.png"></image>
+        电话
+      </view>
+    </view>
+  </view>
+  <!-- 门店服务 -->
+  <view class="mdfw">
+    门店服务
+  </view>
+  <view class="q_bot">
+    <view class='q_bot_q'  wx:for="{{xq}}">
+      {{item}}
+    </view>
+  </view>
+  <!-- 进入点单订餐 -->
+  <view class="order">
+    进入菜单点餐
+  </view>
+</view>

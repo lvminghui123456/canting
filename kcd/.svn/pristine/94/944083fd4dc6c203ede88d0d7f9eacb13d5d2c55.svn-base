@@ -1,0 +1,85 @@
+//app.js
+// var QQMapWX = require('/pages/index/qqmap-wx-jssdk.js');
+// var qqmapsdk;
+App({
+  onLaunch: function() {
+    this.swiper();
+    try {
+      var res = wx.getSystemInfoSync()
+      console.log(res)
+      this.globalData.windowHeight = res.windowHeight;
+      this.globalData.windowWidth = res.windowWidth;
+      console.log(this.globalData)
+    } catch (e) {
+      // Do something when catch error
+    }
+    wx.login({
+      success: function(res) {
+        if (res.code) {
+          console.log(res.code)
+          //发起网络请求
+          wx.request({
+            url: 'http://192.168.1.77:8050/catering/applet/getOpenId',
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              code: res.code
+            },
+            success: function(res) {
+              console.log(res.data)
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    });
+   
+  },
+  globalData: {
+    userInfo: null,
+    trainBeginCity: '杭州',
+    trainEndCity: '北京',
+    cardList: [],
+    host: "http://47.104.240.143:8084",
+    longitude: '',//经纬度
+    latitude: '',//经纬度
+    restaurantMenuId: '',//门店id
+    title: '',//餐厅名称
+    address: '',//餐厅具体地址
+    imagesurl:"",
+  },
+  onShow() {
+    //1、获取当前位置坐标
+    
+  },
+  //请求地址
+  swiper() {
+    var that = this;
+    var host = this.globalData.host;
+    var url = "/catering/Routine/SelectTheCyclePictureNowAll"
+    console.log(host + url)
+    wx.request({
+      url: host + url,
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: this.handleswipwer.bind(this)
+    })
+  },
+  handleswipwer(res) {
+    console.log(res)
+    var imgurl = res.data.res.result[0].imageName;
+    // this.setData({
+    //   imagesurl: imgurl
+    // })
+    this.globalData.imagesurl = imgurl;
+    console.log(this.globalData.imagesurl)
+  },
+  
+
+
+})

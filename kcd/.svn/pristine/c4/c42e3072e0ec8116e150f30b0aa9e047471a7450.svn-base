@@ -1,0 +1,63 @@
+{
+  "pages":[
+    "pages/home/home",
+    "pages/index/index",
+    "pages/card/card",
+    "pages/member/member",
+    "pages/gooddetail/gooddetail",
+    "pages/shopdetail/shopdetail",
+    "pages/choosecity/choosecity",
+    "pages/chooseaddress/chooseaddress",
+    "pages/gooddetailAll/gooddetailAll",
+    "pages/search/search",
+    "pages/carddetail/carddetail",
+    "pages/shopcarpay/shopcarpay",
+    "pages/shopcarpayfinish/shopcarpayfinish",
+    "pages/register/register",
+    "pages/orderdetail/orderdetail",
+    "pages/order/order",
+    "pages/speedserch/speedserch",
+    "pages/person/person",
+    "pages/integralrecord/integralrecord",
+    "pages/navtoregister/navtoregister",
+    "pages/barregister/barregister",
+    "pages/login/login",
+    "pages/creditrecord/creditrecord",
+    "pages/jifenshiyong/jifenshiyong",
+    "pages/shiyongtiaokuan/shiyongtiaokuan",
+    "pages/yinsiquan/yinsiquan",
+    "pages/navto/navto"
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#130e14", 
+    "navigationBarTextStyle":"#fff"
+  },
+  "tabBar": {
+    "selectedColor":"#FE8D3A",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "点餐"
+      },
+      {
+       
+        "pagePath": "pages/card/card",
+        "text": "超级用户"
+      },
+      {
+        
+        "pagePath": "pages/member/member",
+        "text": "我的"
+      }
+    ]
+  }
+  
+  
+}
+                                                                                                                               
